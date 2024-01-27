@@ -16,6 +16,7 @@ public class LineOfSight : MonoBehaviour
     public float ConeAngle = 20f;
     public float ConeDistance = 3f;
     public float LanceAngle = 0f;
+    public float HeatDamage = 1.0f;
 
     public GameObject Lance;
     public GameObject ViewCone;
@@ -53,6 +54,8 @@ public class LineOfSight : MonoBehaviour
                 {
                     // Debug.Log("Lance detected!");
                     Alert.gameObject.SetActive(true);
+                    var lanceScript = hits[0].transform.gameObject.GetComponent<LanceScript>();
+                    lanceScript.Heat += HeatDamage * Time.deltaTime;
                 }
                 
             }
@@ -60,7 +63,7 @@ public class LineOfSight : MonoBehaviour
 
         void OnDrawGizmos()
         {
-            Gizmos.DrawRay(this.transform.position, this.transform.position + (this.LookDirection * 3));
+            Gizmos.DrawLine(this.transform.position, this.transform.position + (this.LookDirection * 3));
         }
 
 

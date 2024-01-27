@@ -9,7 +9,10 @@ public class LanceScript : MonoBehaviour
     public Animator Animator;
     public FartManager FartManager;
 
-    private Vector2 moveVector = Vector2.zero; 
+    private Vector2 moveVector = Vector2.zero;
+
+    public float Heat = 0;
+    public bool isDead = false;
 
     // Start is called before the first frame update
     void Start()
@@ -60,6 +63,14 @@ public class LanceScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (this.isDead) return;
+
+        if(Heat >= 100)
+        {
+            this.Animator.SetBool("Die", true);
+            this.isDead = true;
+            return;
+        }
         var move = moveVector * MovementSpeed * Time.deltaTime;
         this.transform.Translate(move.x, move.y, 0f);
     }
