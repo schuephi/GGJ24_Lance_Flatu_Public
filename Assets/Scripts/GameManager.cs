@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(GameSceneManager))]
 public class GameManager : MonoBehaviour
 {
-    public GameManager Instance;
+    public static GameManager Instance;
     private GameSceneManager gameSceneManager;
 
     private void Awake()
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
 
     public void StartNewGame()
     {
-        gameSceneManager.LoadScene(GameSceneManager.Scene.StartScene);
+        gameSceneManager.LoadScene(GameSceneManager.Scene.IntroScene);
     }
 
     public void PrintCredits()
