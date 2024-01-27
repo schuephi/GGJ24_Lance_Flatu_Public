@@ -26,6 +26,7 @@ public class LanceScript : MonoBehaviour
                 case "Move":
                     {
                         moveVector = context.action.ReadValue<Vector2>();
+                        Debug.Log(moveVector);
                         Animator.SetFloat("Speed", 1);
                         Animator.gameObject.transform.localScale = new Vector3(moveVector.x > 0 ? -1 : 1,1,1);
 
@@ -63,7 +64,7 @@ public class LanceScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (this.isDead) return;
 
@@ -73,8 +74,9 @@ public class LanceScript : MonoBehaviour
             this.isDead = true;
             return;
         }
-        var move = moveVector * MovementSpeed * Time.deltaTime;
+        var move = moveVector * MovementSpeed * Time.fixedDeltaTime;
         //this.transform.Translate(move.x, move.y, 0f);
-        rb2D.MovePosition(new Vector2(rb2D.position.x + move.x, rb2D.position.y + move.y));
+        rb2D.velocity = move;
+        //rb2D.MovePosition(new Vector2(rb2D.position.x + move.x, rb2D.position.y + move.y));
     }
 }

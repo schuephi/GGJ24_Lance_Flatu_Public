@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerVisibilityHandler : MonoBehaviour
+public class CharacterVisibilityHandler : MonoBehaviour
 {
     private SpriteRenderer[] spriteRenderers;
     private int[] basicValues;
