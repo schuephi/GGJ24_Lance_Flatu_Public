@@ -48,7 +48,7 @@ public class LineOfSight : MonoBehaviour
 
             var hits = new RaycastHit2D[1];
             
-            if (Physics2D.Raycast(this.transform.position, lanceDirection, filter, hits) > 0)
+            if (Physics2D.Raycast(this.transform.position, lanceDirection, filter, hits, ConeDistance) > 0)
             {
                 if (hits[0].transform.gameObject.tag == "Lance")
                 {
