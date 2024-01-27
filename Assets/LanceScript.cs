@@ -40,7 +40,7 @@ public class LanceScript : MonoBehaviour
 
                         if (context.phase == InputActionPhase.Canceled)
                         {
-                            Animator.SetBool("Fart_End", true);
+                            Animator.SetBool("Fart_Stop", true);
                         }
 
                         break;
