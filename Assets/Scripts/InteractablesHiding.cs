@@ -13,7 +13,7 @@ public class InteractablesHiding : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && isPlayerInside) // Leave hiding spot if already hidden
+        if (Input.GetKeyUp(KeyCode.E) && isPlayerInside) // Leave hiding spot if already hidden
         {
             UnhidePlayer();
         }
@@ -26,19 +26,21 @@ public class InteractablesHiding : MonoBehaviour
     private void HidePlayer()
     {
         // Play hide animation
-        animator.SetBool("IsHidden", true);
+        //animator.SetBool("IsHidden", true);
+
         isPlayerInside = true;
     }
 
     private void UnhidePlayer()
     {
         // Play unhide animation
-        animator.SetBool("IsHidden", false);
+        //animator.SetBool("IsHidden", false);
+        
         isPlayerInside = false;
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Lance"))
         {
             isPlayerInReach = true;
         }
@@ -46,7 +48,7 @@ public class InteractablesHiding : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Lance"))
         {
             isPlayerInReach = false;
         }
