@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class FartManager : MonoBehaviour
 {
+    public AudioSource FartSource;
 
-    public List<AudioSource> ShortFarts;
+    public List<AudioClip> ShortFarts;
     public List<AudioClip> LongFarts;
     // Start is called before the first frame update
     void Start()
@@ -22,6 +23,7 @@ public class FartManager : MonoBehaviour
     public void Fart()
     {
         var randomIndex = Mathf.Clamp(Mathf.RoundToInt(Random.Range(0, ShortFarts.Count)), 0, ShortFarts.Count -1);
-        this.ShortFarts[randomIndex].Play();
+        FartSource.clip = this.ShortFarts[randomIndex];
+        FartSource.Play();
     }
 }
