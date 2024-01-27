@@ -9,6 +9,8 @@ public class LanceScript : MonoBehaviour
     public Animator Animator;
     public FartManager FartManager;
 
+    private Rigidbody2D rb2D;
+
     private Vector2 moveVector = Vector2.zero; 
 
     // Start is called before the first frame update
@@ -54,13 +56,14 @@ public class LanceScript : MonoBehaviour
                     }
             }           
         };
-
+        rb2D = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
         var move = moveVector * MovementSpeed * Time.deltaTime;
-        this.transform.Translate(move.x, move.y, 0f);
+        //this.transform.Translate(move.x, move.y, 0f);
+        rb2D.MovePosition(new Vector2(rb2D.position.x + move.x, rb2D.position.y + move.y));
     }
 }
