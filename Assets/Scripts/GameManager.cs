@@ -28,6 +28,11 @@ public class GameManager : MonoBehaviour
         gameSceneManager.LoadScene(GameSceneManager.Scene.IntroScene);
     }
 
+    public void LoadLevel()
+    {
+        gameSceneManager.LoadScene(GameSceneManager.Scene.StealthLevel1Scene);
+    }
+
     public void PrintCredits()
     {
 

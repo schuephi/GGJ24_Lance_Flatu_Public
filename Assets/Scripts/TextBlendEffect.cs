@@ -8,6 +8,7 @@ using UnityEngine;
 public class TextBlendEffect : MonoBehaviour
 {
     public event Action OnCharacterTyped = delegate { };
+    public event Action OnTextTyped = delegate { };
     private TMP_Text textToAnimate;
     [SerializeField]
     private float typeEffectSpeed = 0.1f;
@@ -38,5 +39,6 @@ public class TextBlendEffect : MonoBehaviour
             yield return new WaitForSeconds(typeEffectSpeed);
         }
         isTyping = false;
+        OnTextTyped();
     }
 }
