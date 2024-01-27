@@ -1,6 +1,8 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class LineOfSight : MonoBehaviour
@@ -14,9 +16,12 @@ public class LineOfSight : MonoBehaviour
     public float ConeAngle = 20f;
     public float ConeDistance = 3f;
     public float LanceAngle = 0f;
+    public float HeatDamage = 1.0f;
 
     public GameObject Lance;
     public GameObject ViewCone;
+
+    public GameObject Alert;
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +38,7 @@ public class LineOfSight : MonoBehaviour
 
         var lanceDirection = (Lance.transform.position - this.transform.position).normalized;
         LanceAngle = Vector3.Angle(lanceDirection, this.LookDirection);
-
+        Alert.gameObject.SetActive(false);
         if (LanceAngle < ConeAngle)
         {
             var filter = new ContactFilter2D()
@@ -47,10 +52,22 @@ public class LineOfSight : MonoBehaviour
             {
                 if (hits[0].transform.gameObject.tag == "Lance")
                 {
-                   // Debug.Log("Lance detected!");
+                    // Debug.Log("Lance detected!");
+                    Alert.gameObject.SetActive(true);
+                    var lanceScript = hits[0].transform.gameObject.GetComponent<LanceScript>();
+                    lanceScript.Heat += HeatDamage * Time.deltaTime;
                 }
+                
             }
         }
-        
+
+        void OnDrawGizmos()
+        {
+            Gizmos.DrawLine(this.transform.position, this.transform.position + (this.LookDirection * 3));
+        }
+
+
+
+
     }
 }

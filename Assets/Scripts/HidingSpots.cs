@@ -38,17 +38,17 @@ public class InteractablesHiding : MonoBehaviour
         
         isPlayerInside = false;
     }
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.gameObject.CompareTag("Lance"))
+        if (collision.CompareTag("Lance"))
         {
             isPlayerInReach = true;
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (other.gameObject.CompareTag("Lance"))
+        if (collision.CompareTag("Lance"))
         {
             isPlayerInReach = false;
         }
