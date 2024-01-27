@@ -6,6 +6,8 @@ public class LanceScript : MonoBehaviour
     public float MovementSpeed = 1.0f;
     public PlayerInput Input;
 
+    public Animator Animator;
+
     private Vector2 moveVector = Vector2.zero; 
 
     // Start is called before the first frame update
@@ -18,7 +20,15 @@ public class LanceScript : MonoBehaviour
                 case "Move":
                     {
                         moveVector = context.action.ReadValue<Vector2>();
-                        if(context.phase == InputActionPhase.Canceled) moveVector = Vector2.zero;
+                        Animator.SetFloat("Speed", 1);
+                        Animator.gameObject.transform.localScale = new Vector3(moveVector.x > 0 ? -1 : 1,1,1);
+
+                        if (context.phase == InputActionPhase.Canceled)
+                        {
+                            Animator.SetFloat("Speed", 0);
+                            moveVector = Vector2.zero;
+
+                        }
                         break;
                     }
                 default:
@@ -28,11 +38,6 @@ public class LanceScript : MonoBehaviour
             }           
         };
 
-    }
-
-    private void moveCharacter(Vector2 direction)
-    {
-        
     }
 
     // Update is called once per frame
