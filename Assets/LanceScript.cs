@@ -7,6 +7,7 @@ public class LanceScript : MonoBehaviour
     public PlayerInput Input;
 
     public Animator Animator;
+    public FartManager FartManager;
 
     private Vector2 moveVector = Vector2.zero; 
 
@@ -36,10 +37,12 @@ public class LanceScript : MonoBehaviour
                         if (context.phase == InputActionPhase.Started)
                         {
                             Animator.SetBool("Fart_Start", true);
+                            FartManager.Fart();
                         }
 
-                        if (context.phase == InputActionPhase.Canceled)
+                        if (context.canceled == true)
                         {
+                            Animator.SetBool("Fart_Start", false);
                             Animator.SetBool("Fart_Stop", true);
                         }
 
