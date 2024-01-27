@@ -31,6 +31,20 @@ public class LanceScript : MonoBehaviour
                         }
                         break;
                     }
+                case "Fart":
+                    {
+                        if (context.phase == InputActionPhase.Started)
+                        {
+                            Animator.SetBool("Fart_Start", true);
+                        }
+
+                        if (context.phase == InputActionPhase.Canceled)
+                        {
+                            Animator.SetBool("Fart_End", true);
+                        }
+
+                        break;
+                    }
                 default:
                     {
                         break;
