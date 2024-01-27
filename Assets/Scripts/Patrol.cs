@@ -12,7 +12,7 @@ public class Patrol : MonoBehaviour
 
     void Start()
     {
-        Waypoints = GetComponentsInChildren<Transform>().Select(x => x.position).ToList();
+        Waypoints = GetComponentsInChildren<WaypointMarker>().Select(x => x.transform.position).ToList();
     }
 
     // Update is called once per frame
