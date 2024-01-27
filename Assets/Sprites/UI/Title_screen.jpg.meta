@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: b0409ffafe2c9904e87e64c74e02581a
+guid: 947c50055f9c6e848a195ae4c16676ab
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 9032086384591567069
-    second: Goon_Light_0
+      213: 8835675716637088887
+    second: Title_screen_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Goon_Light_0
+      name: Title_screen_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 436
-        height: 758
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,8 +127,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: dd8f83676ba685d70800000000000000
-      internalID: 9032086384591567069
+      spriteID: 77cd2b83040ae9a70800000000000000
+      internalID: 8835675716637088887
       vertices: []
       indices: 
       edges: []
@@ -143,8 +143,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      Goon_Light_0: 9032086384591567069
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
