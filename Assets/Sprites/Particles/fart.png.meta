@@ -335,7 +335,16 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      fart_0: 5495011232951282577
+      fart_1: 5724761946392674691
+      fart_2: 7045839872581818834
+      fart_3: 5831403495121934517
+      fart_4: -711092937872356732
+      fart_5: -5276285576109811010
+      fart_6: 9207391107020177839
+      fart_7: 2759836591798454207
+      fart_8: -8338533579278250195
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
