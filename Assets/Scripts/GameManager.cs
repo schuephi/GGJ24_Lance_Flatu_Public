@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 {
     public event Action<Vector2, int> OnLaunchCar = delegate { };
     public event Action OnCarReachedGoal = delegate { };
+    public event Action OnFlatuencesStart = delegate { };
     public static GameManager Instance;
     private GameSceneManager gameSceneManager;
 
@@ -49,5 +50,10 @@ public class GameManager : MonoBehaviour
     public void ReportCarReachedGoal()
     {
         OnCarReachedGoal();
+    }
+
+    public void ReportFirstSequenceCompleted()
+    {
+        OnFlatuencesStart();
     }
 }
