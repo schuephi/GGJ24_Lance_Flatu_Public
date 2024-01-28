@@ -26,7 +26,7 @@ public class LanceScript : MonoBehaviour
     public bool IsHidden;
     private readonly float flatuenceDownScaling = 0.001f;
     private readonly float minChargeValue = 0.05f;
-    private readonly float heatReductionMultiplicator = 0.02f;
+    private readonly float heatReductionMultiplicator = 0.08f;
 
     // Start is called before the first frame update
     private void Start()
