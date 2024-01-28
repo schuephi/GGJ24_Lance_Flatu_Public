@@ -21,8 +21,11 @@ public class LanceScript : MonoBehaviour
 
     public float Flatulence = 0; // 0 -1;
     public bool IsImmobile { get; private set; }
+    private readonly float flatuenceDownScaling = 0.001f;
+    private readonly float minChargeValue = 0.05f;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         Input.onActionTriggered += (context) =>
         {
@@ -97,7 +100,13 @@ public class LanceScript : MonoBehaviour
         rb2D.velocity = move;
         if (Flatulence < 1)
         {
-            Flatulence += move.magnitude * flatulenceChargeSpeed;
+            var moveDependendCharge = move.magnitude * flatulenceChargeSpeed * flatuenceDownScaling;
+            var minCharge = minChargeValue * Time.fixedDeltaTime;
+            Flatulence += Mathf.Max(moveDependendCharge, minCharge);
+        }
+        else
+        {
+            Flatulence = 1;
         }
     }
 
