@@ -10,8 +10,6 @@ public class Teleporter : MonoBehaviour
 
     private bool isPlayerInReach = false;
 
-    private Animator animator;
-
     IEnumerator TeleportPlayer()
     {
         // Play teleport animation
@@ -50,7 +48,14 @@ public class Teleporter : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && isPlayerInReach)
         {
-            StartCoroutine("TeleportPlayer");
+            
+            if (lanceScript.Flatulence < 0.5f) {
+                StartCoroutine("TeleportPlayer");
+            }
+            else
+            {
+                OnPlayerFailedInteraction?.Invoke();
+            }
         }
     }
 }

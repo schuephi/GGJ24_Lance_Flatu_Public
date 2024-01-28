@@ -17,7 +17,7 @@ public class LanceScript : MonoBehaviour
     public float Heat = 0;
     public bool isDead = false;
 
-    public float Flatulence = 0;
+    public float Flatulence = 0; // 0 - 1
 
     // Start is called before the first frame update
     void Start()
@@ -116,6 +116,13 @@ public class LanceScript : MonoBehaviour
         // Handle player hide animation
         Debug.Log("Start jump in animation");
         Animator.SetTrigger("Jump_Over");
+    }
+
+    private void OnPlayerFailedInteraction()
+    {
+        // Handle player hide animation
+        Debug.Log("Start fail animation");
+        Animator.SetTrigger("Jump_Fail");
     }
 
 }
