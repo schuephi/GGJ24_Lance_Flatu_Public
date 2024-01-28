@@ -19,6 +19,7 @@ public class LanceScript : MonoBehaviour
     public float Heat = 0;
     public bool isDead = false;
 
+    public bool InFlatuenceMode { get; set; }
     public float Flatulence = 0; // 0 -1;
     public bool IsImmobile { get; private set; }
     private readonly float flatuenceDownScaling = 0.001f;
@@ -98,7 +99,12 @@ public class LanceScript : MonoBehaviour
         }
         var move = moveVector * MovementSpeed * Time.fixedDeltaTime;
         rb2D.velocity = move;
-        if (Flatulence < 1)
+        HandleFlatuenceCharge(move);
+    }
+
+    private void HandleFlatuenceCharge(Vector2 move)
+    {
+        if (Flatulence < 1 && InFlatuenceMode)
         {
             var moveDependendCharge = move.magnitude * flatulenceChargeSpeed * flatuenceDownScaling;
             var minCharge = minChargeValue * Time.fixedDeltaTime;
