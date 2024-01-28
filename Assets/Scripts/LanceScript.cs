@@ -73,6 +73,11 @@ public class LanceScript : MonoBehaviour
             hidingSpot.OnPlayerHide.AddListener(OnPlayerHide);
             hidingSpot.OnPlayerUnhide.AddListener(OnPlayerUnhide);
         }
+        var teleporter = FindObjectsByType<Teleporter>(FindObjectsSortMode.None);
+        foreach (var teleport in teleporter)
+        {
+            teleport.OnPlayerJump.AddListener(OnPlayerJump);
+        }
     }
 
     // Update is called once per frame
@@ -104,6 +109,13 @@ public class LanceScript : MonoBehaviour
         // Handle player unhide animation
         Debug.Log("Start jump out animation");
         Animator.SetBool("Jump_Out", true);
+    }
+
+    private void OnPlayerJump()
+    {
+        // Handle player hide animation
+        Debug.Log("Start jump in animation");
+        Animator.SetTrigger("Jump_Over");
     }
 
 }
