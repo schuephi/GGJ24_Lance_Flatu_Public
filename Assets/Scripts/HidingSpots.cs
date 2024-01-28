@@ -6,17 +6,31 @@ public class HidingSpots : MonoBehaviour
 {
     public UnityEvent OnPlayerHide;
     public UnityEvent OnPlayerUnhide;
+    public UnityEvent OnPlayerFailedInteraction;
 
     private bool isPlayerInside = false;
     private bool isPlayerInReach = false;
+
+    private LanceScript lanceScript;
+
+    private void Start()
+    {
+        lanceScript = GameObject.FindGameObjectWithTag("Lance").GetComponent<LanceScript>();
+    }
 
     private void Update()
     {
         if (isPlayerInReach && Input.GetKeyDown(KeyCode.E))
         {
+            if (!lanceScript.IsImmobile) {
             OnPlayerHide?.Invoke();
             isPlayerInside = true;
             Debug.Log("Player tries to enter hiding spot");
+            }
+            else
+            {
+                OnPlayerFailedInteraction?.Invoke();
+            }
         }
 
         if (isPlayerInside && Input.GetKeyUp(KeyCode.E))

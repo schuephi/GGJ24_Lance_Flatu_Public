@@ -4,6 +4,8 @@ using System;
 
 public class LanceScript : MonoBehaviour
 {
+    [SerializeField]
+    private float flatulenceChargeSpeed = 1f;
     public float MovementSpeed = 1.0f;
     public PlayerInput Input;
 
@@ -17,10 +19,14 @@ public class LanceScript : MonoBehaviour
     public float Heat = 0;
     public bool isDead = false;
 
-    public float Flatulence = 0;
+    public bool InFlatuenceMode { get; set; }
+    public float Flatulence = 0; // 0 -1;
+    public bool IsImmobile { get; private set; }
+    private readonly float flatuenceDownScaling = 0.001f;
+    private readonly float minChargeValue = 0.05f;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         Input.onActionTriggered += (context) =>
         {
@@ -29,7 +35,7 @@ public class LanceScript : MonoBehaviour
                 case "Move":
                     {
                         moveVector = context.action.ReadValue<Vector2>();
-                        Debug.Log(moveVector);
+
                         Animator.SetFloat("Speed", 1);
 
                         if(moveVector.x != 0) {
@@ -56,6 +62,7 @@ public class LanceScript : MonoBehaviour
                         {
                             Animator.SetBool("Fart_Start", false);
                             Animator.SetBool("Fart_Stop", true);
+                            FartManager.StopFart();
                         }
                         break;
                     }
@@ -73,6 +80,11 @@ public class LanceScript : MonoBehaviour
             hidingSpot.OnPlayerHide.AddListener(OnPlayerHide);
             hidingSpot.OnPlayerUnhide.AddListener(OnPlayerUnhide);
         }
+        var teleporter = FindObjectsByType<Teleporter>(FindObjectsSortMode.None);
+        foreach (var teleport in teleporter)
+        {
+            teleport.OnPlayerJump.AddListener(OnPlayerJump);
+        }
     }
 
     // Update is called once per frame
@@ -87,9 +99,22 @@ public class LanceScript : MonoBehaviour
             return;
         }
         var move = moveVector * MovementSpeed * Time.fixedDeltaTime;
-        //this.transform.Translate(move.x, move.y, 0f);
         rb2D.velocity = move;
-        //rb2D.MovePosition(new Vector2(rb2D.position.x + move.x, rb2D.position.y + move.y));
+        HandleFlatuenceCharge(move);
+    }
+
+    private void HandleFlatuenceCharge(Vector2 move)
+    {
+        if (Flatulence < 1 && InFlatuenceMode)
+        {
+            var moveDependendCharge = move.magnitude * flatulenceChargeSpeed * flatuenceDownScaling;
+            var minCharge = minChargeValue * Time.fixedDeltaTime;
+            Flatulence += Mathf.Max(moveDependendCharge, minCharge);
+        }
+        else
+        {
+            Flatulence = 1;
+        }
     }
 
     private void OnPlayerHide()
@@ -104,6 +129,20 @@ public class LanceScript : MonoBehaviour
         // Handle player unhide animation
         Debug.Log("Start jump out animation");
         Animator.SetBool("Jump_Out", true);
+    }
+
+    private void OnPlayerJump()
+    {
+        // Handle player hide animation
+        Debug.Log("Start jump in animation");
+        Animator.SetTrigger("Jump_Over");
+    }
+
+    private void OnPlayerFailedInteraction()
+    {
+        // Handle player hide animation
+        Debug.Log("Start fail animation");
+        Animator.SetTrigger("Jump_Fail");
     }
 
 }

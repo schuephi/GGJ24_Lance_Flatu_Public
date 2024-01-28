@@ -8,6 +8,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public event Action<Vector2, int> OnLaunchCar = delegate { };
+    public event Action OnCarReachedGoal = delegate { };
     public static GameManager Instance;
     private GameSceneManager gameSceneManager;
 
@@ -43,5 +44,10 @@ public class GameManager : MonoBehaviour
     public void LaunchCar(Vector2 pos, int direction)
     {
         OnLaunchCar(pos, direction);
+    }
+
+    public void ReportCarReachedGoal()
+    {
+        OnCarReachedGoal();
     }
 }
