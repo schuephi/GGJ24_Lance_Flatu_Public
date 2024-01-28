@@ -56,4 +56,9 @@ public class GameManager : MonoBehaviour
     {
         OnFlatuencesStart();
     }
+
+    public void OnGameGoalReached()
+    {
+
+    }
 }
