@@ -26,7 +26,7 @@ public class LanceScript : MonoBehaviour
     public bool IsHidden;
     private readonly float flatuenceDownScaling = 0.001f;
     private readonly float minChargeValue = 0.05f;
-    private bool isFarting = false;
+    private readonly float heatReductionMultiplicator = 0.02f;
 
     // Start is called before the first frame update
     private void Start()
@@ -116,12 +116,13 @@ public class LanceScript : MonoBehaviour
        
         var move = moveVector * MovementSpeed * Time.fixedDeltaTime;
         rb2D.velocity = move;
+        Heat -= Time.fixedDeltaTime * heatReductionMultiplicator;
         HandleFlatuenceCharge(move);
     }
 
     private void HandleFlatuenceCharge(Vector2 move)
     {
-        if (InFlatuenceMode && !isFarting)
+        if (InFlatuenceMode)
         {
             if (Flatulence < 1)
             {
@@ -132,7 +133,7 @@ public class LanceScript : MonoBehaviour
             else
             {
                 Flatulence = 1;
-                isFarting = true;
+                FartManager.Fart(Flatulence);
             }
         }
         IsImmobile = Flatulence > 0.6f;

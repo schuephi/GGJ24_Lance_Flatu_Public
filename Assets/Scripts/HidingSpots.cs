@@ -1,8 +1,5 @@
-using System;
-using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 public class HidingSpots : MonoBehaviour
 {
@@ -27,12 +24,13 @@ public class HidingSpots : MonoBehaviour
     {
         if (isPlayerInReach && Input.GetKeyDown(KeyCode.E))
         {
-            if (!lanceScript.IsImmobile) {
-            OnPlayerHide?.Invoke();
-            isPlayerInside = true;
-            lanceScript.IsHidden = true;
+            if (!lanceScript.IsImmobile)
+            {
+                OnPlayerHide?.Invoke();
+                isPlayerInside = true;
+                lanceScript.IsHidden = true;
 
-            Debug.Log("Player tries to enter hiding spot");
+                Debug.Log("Player tries to enter hiding spot");
             }
             else
             {

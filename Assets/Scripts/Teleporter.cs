@@ -1,8 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
-using Microsoft.Unity.VisualStudio.Editor;
-using UnityEngine.UI;
 
 
 public class Teleporter : MonoBehaviour
@@ -63,8 +61,9 @@ public class Teleporter : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && isPlayerInReach)
         {
-            
-            if (!lanceScript.IsImmobile) {
+
+            if (!lanceScript.IsImmobile)
+            {
                 StartCoroutine("TeleportPlayer");
             }
             else
