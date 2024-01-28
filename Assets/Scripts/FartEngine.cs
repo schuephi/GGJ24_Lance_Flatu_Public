@@ -8,6 +8,7 @@ public class FartEngine : MonoBehaviour
     private FartManager fartManager;
     private LanceScript lanceScript;
     private bool isFarting;
+    private float reduceSpeed = 0.5f;
 
     private void Awake()
     {
@@ -25,7 +26,7 @@ public class FartEngine : MonoBehaviour
     {
         if (isFarting)
         {
-            lanceScript.Flatulence -= Time.fixedDeltaTime;
+            lanceScript.Flatulence -= Time.fixedDeltaTime * reduceSpeed;
         }
         if (lanceScript.Flatulence <= 0)
         {

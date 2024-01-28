@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class StoryIntroManager : MonoBehaviour
 {
+    public event Action OnSecondSequenceStart = delegate { };
+
     [SerializeField]
     private AudioClip IntroClip1;
     [SerializeField]
@@ -47,6 +50,7 @@ public class StoryIntroManager : MonoBehaviour
         yield return new WaitForSeconds(15f);
         lanceScript.InFlatuenceMode = true;
         lanceScript.FartManager.FartSingle();
+        OnSecondSequenceStart();
     }
 
     private void OnDisable()

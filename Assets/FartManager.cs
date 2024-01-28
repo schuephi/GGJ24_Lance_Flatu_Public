@@ -95,6 +95,10 @@ public class FartManager : MonoBehaviour
     public void StopFart()
     {
         FartSource.Stop();
+        if (ActiveFart.Fart is null)
+        {
+            return;
+        }
         FartSource.clip = ActiveFart.Fart.EndFart;
         FartSource.loop = false;
         FartSource.Play();

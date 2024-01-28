@@ -121,7 +121,7 @@ public class LanceScript : MonoBehaviour
 
     private void HandleFlatuenceCharge(Vector2 move)
     {
-        if (InFlatuenceMode && !isFarting)
+        if (InFlatuenceMode)
         {
             if (Flatulence < 1)
             {
@@ -132,7 +132,7 @@ public class LanceScript : MonoBehaviour
             else
             {
                 Flatulence = 1;
-                isFarting = true;
+                FartManager.Fart(Flatulence);
             }
         }
         IsImmobile = Flatulence > 0.6f;
