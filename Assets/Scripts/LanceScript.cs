@@ -117,6 +117,10 @@ public class LanceScript : MonoBehaviour
         var move = moveVector * MovementSpeed * Time.fixedDeltaTime;
         rb2D.velocity = move;
         Heat -= Time.fixedDeltaTime * heatReductionMultiplicator;
+        if (Heat < 0)
+        {
+            Heat = 0;
+        }
         HandleFlatuenceCharge(move);
     }
 
