@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 6b4c52b289a113645810dfc8d8204296
+guid: 97070d27fe7feaf488ad17a32e0f0003
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8476041306298843310
-    second: Obj_WinScreen_0
+      213: -848381713617584042
+    second: WinScreen_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Obj_WinScreen_0
+      name: WinScreen_0
       rect:
         serializedVersion: 2
-        x: 470
-        y: 100
-        width: 1055
-        height: 1849
+        x: 0
+        y: 0
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -114,8 +114,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ea00b7bf8a2f0a570800000000000000
-      internalID: 8476041306298843310
+      spriteID: 65003ed8351f934f0800000000000000
+      internalID: -848381713617584042
       vertices: []
       indices: 
       edges: []
