@@ -56,7 +56,7 @@ public class Teleporter : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && isPlayerInReach)
         {
             
-            if (lanceScript.IsImmobile) {
+            if (!lanceScript.IsImmobile) {
                 StartCoroutine("TeleportPlayer");
             }
             else
