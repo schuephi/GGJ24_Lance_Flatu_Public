@@ -7,10 +7,10 @@ public class Teleporter : MonoBehaviour
 {
     public Transform destination; // The destination teleporter
     public UnityEvent OnPlayerJump;
+    public UnityEvent OnPlayerFailedInteraction;
 
     private bool isPlayerInReach = false;
-
-    private Animator animator;
+    private LanceScript lanceScript;
 
     IEnumerator TeleportPlayer()
     {
@@ -25,6 +25,11 @@ public class Teleporter : MonoBehaviour
             Debug.Log(t);
             yield return null;
         }
+    }
+
+    private void Start()
+    {
+        lanceScript = GameObject.FindGameObjectWithTag("Lance").GetComponent<LanceScript>();
     }
 
 
@@ -50,7 +55,14 @@ public class Teleporter : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && isPlayerInReach)
         {
-            StartCoroutine("TeleportPlayer");
+            
+            if (lanceScript.IsImmobile) {
+                StartCoroutine("TeleportPlayer");
+            }
+            else
+            {
+                OnPlayerFailedInteraction?.Invoke();
+            }
         }
     }
 }

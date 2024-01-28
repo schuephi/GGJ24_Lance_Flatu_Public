@@ -4,6 +4,8 @@ using System;
 
 public class LanceScript : MonoBehaviour
 {
+    [SerializeField]
+    private float flatulenceChargeSpeed = 1f;
     public float MovementSpeed = 1.0f;
     public PlayerInput Input;
 
@@ -17,8 +19,8 @@ public class LanceScript : MonoBehaviour
     public float Heat = 0;
     public bool isDead = false;
 
-    public float Flatulence = 0;
-
+    public float Flatulence = 0; // 0 -1;
+    public bool IsImmobile { get; private set; }
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +31,7 @@ public class LanceScript : MonoBehaviour
                 case "Move":
                     {
                         moveVector = context.action.ReadValue<Vector2>();
-                        Debug.Log(moveVector);
+
                         Animator.SetFloat("Speed", 1);
 
                         if(moveVector.x != 0) {
@@ -92,9 +94,11 @@ public class LanceScript : MonoBehaviour
             return;
         }
         var move = moveVector * MovementSpeed * Time.fixedDeltaTime;
-        //this.transform.Translate(move.x, move.y, 0f);
         rb2D.velocity = move;
-        //rb2D.MovePosition(new Vector2(rb2D.position.x + move.x, rb2D.position.y + move.y));
+        if (Flatulence < 1)
+        {
+            Flatulence += move.magnitude * flatulenceChargeSpeed;
+        }
     }
 
     private void OnPlayerHide()
@@ -116,6 +120,13 @@ public class LanceScript : MonoBehaviour
         // Handle player hide animation
         Debug.Log("Start jump in animation");
         Animator.SetTrigger("Jump_Over");
+    }
+
+    private void OnPlayerFailedInteraction()
+    {
+        // Handle player hide animation
+        Debug.Log("Start fail animation");
+        Animator.SetTrigger("Jump_Fail");
     }
 
 }
