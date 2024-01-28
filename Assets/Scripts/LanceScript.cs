@@ -54,15 +54,21 @@ public class LanceScript : MonoBehaviour
                     {
                         if (context.phase == InputActionPhase.Started)
                         {
-                            Animator.SetBool("Fart_Start", true);
-                            FartManager.Fart();
+                            if (InFlatuenceMode)
+                            {
+                                Animator.SetBool("Fart_Start", true);
+                                FartManager.Fart();
+                            }
                         }
 
                         if (context.canceled == true)
                         {
-                            Animator.SetBool("Fart_Start", false);
-                            Animator.SetBool("Fart_Stop", true);
-                            FartManager.StopFart();
+                            if (InFlatuenceMode)
+                            {
+                                Animator.SetBool("Fart_Start", false);
+                                Animator.SetBool("Fart_Stop", true);
+                                FartManager.StopFart();
+                            }
                         }
                         break;
                     }
