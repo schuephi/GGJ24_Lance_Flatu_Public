@@ -14,11 +14,6 @@ public class TextBlendEffect : MonoBehaviour
     private float typeEffectSpeed = 0.1f;
     private bool isTyping;
 
-    private void Awake()
-    {
-        textToAnimate = GetComponent<TMP_Text>();
-    }
-
     public void SetText(string text)
     {
         if (!isTyping)
@@ -29,6 +24,7 @@ public class TextBlendEffect : MonoBehaviour
 
     private IEnumerator TypeWriterEffect(string fullText)
     {
+        textToAnimate = GetComponent<TMP_Text>();
         isTyping = true;
         textToAnimate.text = "";
         var currentIndex = 0;

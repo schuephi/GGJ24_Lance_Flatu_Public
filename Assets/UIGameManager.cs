@@ -5,27 +5,38 @@ public class UIGameManager : MonoBehaviour
 {
     // Start is called before the first frame update
     public LanceScript Lance;
-    public GameObject LooseScreen;
 
-    bool lastLanceDead = false;
-    void Start()
-    {
-
-    }
+    bool wasLanceDead = false;
 
     // Update is called once per frame
     void Update()
     {
-        if (Lance.isDead && lastLanceDead)
+        if (Lance.isDead && wasLanceDead == false)
         {
             StartCoroutine(ShowLooseScreen());
         }
-        lastLanceDead = Lance.isDead;
+
+        wasLanceDead = Lance.isDead;
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameManager.Instance.ShowMenu();
+        }
+    }
+
+    public void HideMenuScreen()
+    {
+        GameManager.Instance.HideMenu();
+    }
+
+    public void QuitGame()
+    {
+        GameManager.Instance.QuitGame();
     }
 
     IEnumerator ShowLooseScreen()
     {
         yield return new WaitForSeconds(1f);
-        LooseScreen.SetActive(true);
+        GameManager.Instance.ShowLooseScreen();
     }
 }

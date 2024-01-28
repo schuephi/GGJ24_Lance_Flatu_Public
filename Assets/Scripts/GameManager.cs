@@ -12,6 +12,10 @@ public class GameManager : MonoBehaviour
     public event Action OnFlatuencesStart = delegate { };
     public event Action OnShowCredits = delegate { };
     public event Action OnHideCredits = delegate { };
+    public event Action OnShowMenu = delegate { };
+    public event Action OnHideMenu = delegate { };
+    public event Action OnShowLooseScreen = delegate { };
+    public event Action OnHideLooseScreen = delegate { };
     public static GameManager Instance;
     private GameSceneManager gameSceneManager;
 
@@ -47,6 +51,31 @@ public class GameManager : MonoBehaviour
     public void HideCredits()
     {
         OnHideCredits();
+    }
+
+    public void ShowMenu()
+    {
+        OnShowMenu();
+    }
+
+    public void HideMenu()
+    {
+        OnHideMenu();
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void ShowLooseScreen()
+    {
+        OnShowLooseScreen();
+    }
+
+    public void HideLooseScreen()
+    {
+        OnHideLooseScreen();
     }
 
     public void LaunchCar(Vector2 pos, int direction)
