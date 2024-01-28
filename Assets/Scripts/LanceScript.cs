@@ -135,6 +135,7 @@ public class LanceScript : MonoBehaviour
                 isFarting = true;
             }
         }
+        IsImmobile = Flatulence > 0.6f;
     }
 
     private void OnPlayerHide()

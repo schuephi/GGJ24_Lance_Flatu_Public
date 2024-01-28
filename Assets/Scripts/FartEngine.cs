@@ -6,10 +6,13 @@ using UnityEngine;
 public class FartEngine : MonoBehaviour
 {
     private FartManager fartManager;
+    private LanceScript lanceScript;
+    private bool isFarting;
 
     private void Awake()
     {
         fartManager = GetComponent<FartManager>();
+        lanceScript = GetComponent<LanceScript>();
     }
 
     private void OnEnable()
@@ -18,13 +21,32 @@ public class FartEngine : MonoBehaviour
         fartManager.OnFartStopped += FartManager_OnFartStopped;
     }
 
-    private void FartManager_OnFart(float obj)
+    private void FixedUpdate()
     {
-        throw new System.NotImplementedException();
+        if (isFarting)
+        {
+            lanceScript.Flatulence -= Time.fixedDeltaTime;
+        }
+        if (lanceScript.Flatulence <= 0)
+        {
+            fartManager.StopFart();
+            lanceScript.Flatulence = 0;
+        }
     }
 
-    private void FartManager_OnFartStopped(float obj)
+    private void FartManager_OnFart(float intensity)
     {
-        throw new System.NotImplementedException();
+        isFarting = true;
+    }
+
+    private void FartManager_OnFartStopped(float intensity)
+    {
+        isFarting = false;
+    }
+
+    private void OnDisable()
+    {
+        fartManager.OnFart -= FartManager_OnFart;
+        fartManager.OnFartStopped -= FartManager_OnFartStopped;
     }
 }
