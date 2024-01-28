@@ -29,7 +29,7 @@ public class LanceScript : MonoBehaviour
                 case "Move":
                     {
                         moveVector = context.action.ReadValue<Vector2>();
-                        Debug.Log(moveVector);
+
                         Animator.SetFloat("Speed", 1);
 
                         if(moveVector.x != 0) {
