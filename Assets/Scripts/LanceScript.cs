@@ -62,6 +62,7 @@ public class LanceScript : MonoBehaviour
                         {
                             Animator.SetBool("Fart_Start", false);
                             Animator.SetBool("Fart_Stop", true);
+                            FartManager.StopFart();
                         }
                         break;
                     }
