@@ -21,6 +21,7 @@ public class GoldenThrone : MonoBehaviour
         if (isPlayerInReach && Input.GetKeyDown(KeyCode.E))
         {
             Debug.Log("Player wins");
+            GameManager.Instance.OnGameGoalReached();
         }
     }
 
