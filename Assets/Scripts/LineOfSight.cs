@@ -18,7 +18,7 @@ public class LineOfSight : MonoBehaviour
     public float LanceAngle = 0f;
     public float HeatDamage = 1.0f;
 
-    public GameObject Lance;
+    public LanceScript Lance;
     public GameObject ViewCone;
 
     public GameObject Alert;
@@ -26,7 +26,7 @@ public class LineOfSight : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Lance = FindFirstObjectByType<LanceScript>().gameObject;
+        Lance = FindFirstObjectByType<LanceScript>();
     }
 
     // Update is called once per frame
@@ -34,7 +34,11 @@ public class LineOfSight : MonoBehaviour
     {
         this.LookDirection = Quaternion.AngleAxis(Mathf.Sin(Time.time * WiggleSpeed) * WiggleAngle, Vector3.forward) * Goon.LookDirection;
 
-        ViewCone.transform.rotation = Quaternion.Lerp(ViewCone.transform.rotation, Quaternion.FromToRotation(Vector3.up, LookDirection), RotationSpeed * Time.deltaTime);
+        var angle = Vector3.Angle(Vector3.up, this.LookDirection);
+
+        Goon.GoonAnimator.SetFloat("Angle", Mathf.Clamp(Mathf.Abs(angle) / 180f, 0f, 1f));
+
+       // ViewCone.transform.rotation = Quaternion.Lerp(ViewCone.transform.rotation, Quaternion.FromToRotation(Vector3.up, LookDirection), RotationSpeed * Time.deltaTime);
 
         var lanceDirection = (Lance.transform.position - this.transform.position).normalized;
         LanceAngle = Vector3.Angle(lanceDirection, this.LookDirection);
@@ -60,14 +64,11 @@ public class LineOfSight : MonoBehaviour
                 
             }
         }
-
-        void OnDrawGizmos()
-        {
-            Gizmos.DrawLine(this.transform.position, this.transform.position + (this.LookDirection * 3));
-        }
+    }
 
 
-
-
+    void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(this.transform.position, this.transform.position + (this.LookDirection * 3));
     }
 }
