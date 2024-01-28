@@ -63,6 +63,10 @@ public class LanceScript : MonoBehaviour
             }           
         };
         rb2D = GetComponent<Rigidbody2D>();
+
+        var hidingSpot = FindFirstObjectByType<HidingSpots>();
+        hidingSpot.OnPlayerHide.AddListener(OnPlayerHide);
+        hidingSpot.OnPlayerUnhide.AddListener(OnPlayerUnhide);
     }
 
     // Update is called once per frame
@@ -81,4 +85,19 @@ public class LanceScript : MonoBehaviour
         rb2D.velocity = move;
         //rb2D.MovePosition(new Vector2(rb2D.position.x + move.x, rb2D.position.y + move.y));
     }
+
+    private void OnPlayerHide()
+    {
+        // Handle player hide animation
+        Debug.Log("Start jump in animation");
+        Animator.SetBool("Jump_In", true);
+    }
+
+    private void OnPlayerUnhide()
+    {
+        // Handle player unhide animation
+        Debug.Log("Start jump out animation");
+        Animator.SetBool("Jump_Out", true);
+    }
+
 }
