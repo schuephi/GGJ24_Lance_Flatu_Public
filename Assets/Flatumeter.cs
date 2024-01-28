@@ -36,7 +36,7 @@ public class Flatumeter : MonoBehaviour
                 ShakeSpeed = 100;
                 break;
             default:
-                ShakeAmplitude = 4000;
+                ShakeAmplitude = 2000;
                 ShakeSpeed = 10000;
                 break;
         }

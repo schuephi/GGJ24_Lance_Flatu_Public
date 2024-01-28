@@ -1,6 +1,7 @@
 using Assets;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum ACTIVE_MODE
@@ -10,16 +11,19 @@ public enum ACTIVE_MODE
     STOPPING
 }
 
+public class ActiveFart
+{
+    public FartData Fart;
+}
+
 public class FartManager : MonoBehaviour
 {
     public event Action<float> OnFart = delegate { };
     public event Action<float> OnFartStopped = delegate { };
     public AudioSource FartSource;
 
-    public FartData ActiveFart;
+    private ActiveFart ActiveFart = new ActiveFart();
     public List<FartData> Farts;
-    public List<AudioClip> ShortFarts;
-    public List<AudioClip> LongFarts;
 
     private float StartTime;
     public ACTIVE_MODE ActiveMode;
@@ -27,34 +31,39 @@ public class FartManager : MonoBehaviour
     public void SelectRandomFart()
     {
         var randomIndex = Mathf.Clamp(Mathf.RoundToInt(UnityEngine.Random.Range(0, Farts.Count)), 0, Farts.Count - 1);
-        ActiveFart = this.Farts[randomIndex];
+        ActiveFart.Fart = this.Farts[randomIndex];
     }
 
-    public void Fart()
+    public void SelectFartByIntensity(float intensity)
     {
-        SelectRandomFart();
+        ActiveFart.Fart = Farts.Where(x => x.Intensity <= intensity).OrderBy(x => (intensity - x.Intensity)).First();
+    }
+
+    public void Fart(float intensity)
+    {
+        SelectFartByIntensity(intensity);
         if (ActiveFart == null) return;
 
-        FartSource.clip = ActiveFart.StartFart;
+        FartSource.clip = ActiveFart.Fart.StartFart;
         FartSource.Play();
 
         StartTime = Time.time;
 
-        OnFart(UnityEngine.Random.Range(0, 1f));
+        OnFart(intensity);
     }
 
     public void Update()
     {
-        if (ActiveFart == null) return;
+        if (ActiveFart.Fart == null) return;
 
         switch (ActiveMode)
         {
             case ACTIVE_MODE.STARTING:
                 {
-                    if (ActiveFart != null && (Time.time - StartTime) > ActiveFart.StartFart.length)
+                    if ((Time.time - StartTime) > ActiveFart.Fart.StartFart.length)
                     {
                         FartSource.Stop();
-                        FartSource.clip = ActiveFart.LoopFart;
+                        FartSource.clip = ActiveFart.Fart.LoopFart;
                         FartSource.loop = true;
                         FartSource.Play();
                         ActiveMode = ACTIVE_MODE.LOOPING;
@@ -78,11 +87,11 @@ public class FartManager : MonoBehaviour
     public void StopFart()
     {
         FartSource.Stop();
-        FartSource.clip = ActiveFart.EndFart;
+        FartSource.clip = ActiveFart.Fart.EndFart;
         FartSource.loop = false;
         FartSource.Play();
-        ActiveMode = ACTIVE_MODE.STARTING;
-        ActiveFart = null;
+        ActiveMode = ACTIVE_MODE.STARTING;    
         OnFartStopped(0);
+        ActiveFart.Fart = null;
     }
 }

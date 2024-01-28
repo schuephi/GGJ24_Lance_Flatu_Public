@@ -9,6 +9,8 @@ public class FartListener : MonoBehaviour
     private float fartDetectDistance = 6f;
     private FartManager fartManager;
 
+    public GoonMovemenet Movemenet;
+
     private void Awake()
     {
         fartManager = FindFirstObjectByType<LanceScript>().FartManager;
@@ -21,15 +23,28 @@ public class FartListener : MonoBehaviour
 
     private void FartManager_OnFart(float intensity)
     {
-        if (Vector3.Distance(fartManager.transform.position, transform.position) <= fartDetectDistance)
+        if (Vector3.Distance(fartManager.transform.position, transform.position) <= (fartDetectDistance * intensity))
         {
-            Debug.Log("Fart recognized");
+            var hits = new RaycastHit2D[1];
+            if(Physics2D.Raycast(transform.position, fartManager.transform.position - transform.position, new ContactFilter2D(), hits) > 0)
+            {
+                if (hits[0].transform.gameObject.tag == "Lance")
+                {
+                    Movemenet.StartInvestigation(fartManager.transform.position);
+                }
+            }
+            
         }
     }
 
     private void OnDisable()
     {
         fartManager.OnFart -= FartManager_OnFart;
+    }
+
+    public void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(this.transform.position, fartDetectDistance);
     }
 
 }

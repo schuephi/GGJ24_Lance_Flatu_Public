@@ -1,6 +1,8 @@
 using System;
+using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class HidingSpots : MonoBehaviour
 {
@@ -10,12 +12,15 @@ public class HidingSpots : MonoBehaviour
 
     private bool isPlayerInside = false;
     private bool isPlayerInReach = false;
+    [SerializeField]
+    private UnityEngine.UI.Image keyIndicator;
 
     private LanceScript lanceScript;
 
     private void Start()
     {
         lanceScript = GameObject.FindGameObjectWithTag("Lance").GetComponent<LanceScript>();
+        keyIndicator.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -25,6 +30,7 @@ public class HidingSpots : MonoBehaviour
             if (!lanceScript.IsImmobile) {
             OnPlayerHide?.Invoke();
             isPlayerInside = true;
+
             Debug.Log("Player tries to enter hiding spot");
             }
             else
@@ -46,6 +52,7 @@ public class HidingSpots : MonoBehaviour
         if (collision.CompareTag("Lance"))
         {
             isPlayerInReach = true;
+            keyIndicator.gameObject.SetActive(true);
         }
     }
 
@@ -54,6 +61,7 @@ public class HidingSpots : MonoBehaviour
         if (collision.CompareTag("Lance"))
         {
             isPlayerInReach = false;
+            keyIndicator.gameObject.SetActive(false);
         }
     }
 
