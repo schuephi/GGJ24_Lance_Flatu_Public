@@ -1,6 +1,7 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System;
 
 public class LanceScript : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class LanceScript : MonoBehaviour
     public bool IsHidden;
     private readonly float flatuenceDownScaling = 0.001f;
     private readonly float minChargeValue = 0.05f;
+    private bool isFarting = false;
 
     // Start is called before the first frame update
     private void Start()
@@ -112,15 +114,19 @@ public class LanceScript : MonoBehaviour
 
     private void HandleFlatuenceCharge(Vector2 move)
     {
-        if (Flatulence < 1 && InFlatuenceMode)
+        if (InFlatuenceMode && !isFarting)
         {
-            var moveDependendCharge = move.magnitude * flatulenceChargeSpeed * flatuenceDownScaling;
-            var minCharge = minChargeValue * Time.fixedDeltaTime;
-            Flatulence += Mathf.Max(moveDependendCharge, minCharge);
-        }
-        else
-        {
-            Flatulence = 1;
+            if (Flatulence < 1)
+            {
+                var moveDependendCharge = move.magnitude * flatulenceChargeSpeed * flatuenceDownScaling;
+                var minCharge = minChargeValue * Time.fixedDeltaTime;
+                Flatulence += Mathf.Max(moveDependendCharge, minCharge);
+            }
+            else
+            {
+                Flatulence = 1;
+                isFarting = true;
+            }
         }
     }
 
