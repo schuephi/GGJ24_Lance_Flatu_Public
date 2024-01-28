@@ -19,7 +19,7 @@ public class LanceScript : MonoBehaviour
     public float Heat = 0;
     public bool isDead = false;
 
-    public bool InFlatuenceMode { get; set; } = true;
+    public bool InFlatuenceMode { get; set; }
     public float Flatulence = 0; // 0 -1;
     public bool IsImmobile { get; private set; }
     private readonly float flatuenceDownScaling = 0.001f;
