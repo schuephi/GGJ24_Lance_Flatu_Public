@@ -40,7 +40,7 @@ public class HidingSpots : MonoBehaviour
             }
         }
 
-        if (isPlayerInside && Input.GetKeyUp(KeyCode.E))
+        if (isPlayerInside && (Input.GetKeyUp(KeyCode.E) || isPlayerInReach == false))
         {
             OnPlayerUnhide?.Invoke();
             isPlayerInside = false;
