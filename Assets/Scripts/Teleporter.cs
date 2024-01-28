@@ -10,6 +10,7 @@ public class Teleporter : MonoBehaviour
     public UnityEvent OnPlayerFailedInteraction;
 
     private bool isPlayerInReach = false;
+    private LanceScript lanceScript;
 
     IEnumerator TeleportPlayer()
     {
@@ -24,6 +25,11 @@ public class Teleporter : MonoBehaviour
             Debug.Log(t);
             yield return null;
         }
+    }
+
+    private void Start()
+    {
+        lanceScript = GameObject.FindGameObjectWithTag("Lance").GetComponent<LanceScript>();
     }
 
 
@@ -50,7 +56,7 @@ public class Teleporter : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && isPlayerInReach)
         {
             
-            if (lanceScript.isImmobile < 0.5f) {
+            if (lanceScript.IsImmobile) {
                 StartCoroutine("TeleportPlayer");
             }
             else
