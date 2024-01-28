@@ -51,7 +51,7 @@ public class FartManager : MonoBehaviour
         {
             case ACTIVE_MODE.STARTING:
                 {
-                    if ((Time.time - StartTime) > ActiveFart.StartFart.length)
+                    if (ActiveFart != null && (Time.time - StartTime) > ActiveFart.StartFart.length)
                     {
                         FartSource.Stop();
                         FartSource.clip = ActiveFart.LoopFart;
