@@ -49,7 +49,14 @@ public class StoryIntroManager : MonoBehaviour
     {
         yield return new WaitForSeconds(15f);
         lanceScript.InFlatuenceMode = true;
-        lanceScript.FartManager.FartSingle();
+        lanceScript.FartManager.Fart(0.4f);
+        StartCoroutine(DelayFartStop());
+    }
+
+    private IEnumerator DelayFartStop()
+    {
+        yield return new WaitForEndOfFrame();
+        lanceScript.FartManager.StopFart();
         OnSecondSequenceStart();
     }
 
