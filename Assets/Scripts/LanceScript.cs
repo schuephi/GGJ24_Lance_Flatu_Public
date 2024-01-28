@@ -31,7 +31,10 @@ public class LanceScript : MonoBehaviour
                         moveVector = context.action.ReadValue<Vector2>();
                         Debug.Log(moveVector);
                         Animator.SetFloat("Speed", 1);
-                        Animator.gameObject.transform.localScale = new Vector3(moveVector.x > 0 ? -1 : 1,1,1);
+
+                        if(moveVector.x != 0) {
+                            Animator.gameObject.transform.localScale = new Vector3(moveVector.x > 0 ? -1 : 1, 1, 1);
+                        }
 
                         if (context.phase == InputActionPhase.Canceled)
                         {
