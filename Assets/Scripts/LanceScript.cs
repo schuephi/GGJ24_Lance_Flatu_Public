@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 public class LanceScript : MonoBehaviour
 {
@@ -30,7 +31,10 @@ public class LanceScript : MonoBehaviour
                         moveVector = context.action.ReadValue<Vector2>();
                         Debug.Log(moveVector);
                         Animator.SetFloat("Speed", 1);
-                        Animator.gameObject.transform.localScale = new Vector3(moveVector.x > 0 ? -1 : 1,1,1);
+
+                        if(moveVector.x != 0) {
+                            Animator.gameObject.transform.localScale = new Vector3(moveVector.x > 0 ? -1 : 1, 1, 1);
+                        }
 
                         if (context.phase == InputActionPhase.Canceled)
                         {
@@ -53,7 +57,6 @@ public class LanceScript : MonoBehaviour
                             Animator.SetBool("Fart_Start", false);
                             Animator.SetBool("Fart_Stop", true);
                         }
-
                         break;
                     }
                 default:
@@ -64,7 +67,7 @@ public class LanceScript : MonoBehaviour
         };
         rb2D = GetComponent<Rigidbody2D>();
 
-        var hidingSpots = FindObjectsOfType<HidingSpots>();
+        var hidingSpots = FindObjectsByType<HidingSpots>(FindObjectsSortMode.None);
         foreach (var hidingSpot in hidingSpots)
         {
             hidingSpot.OnPlayerHide.AddListener(OnPlayerHide);
