@@ -7,10 +7,9 @@ public class Teleporter : MonoBehaviour
 {
     public Transform destination; // The destination teleporter
     public UnityEvent OnPlayerJump;
+    public UnityEvent OnPlayerFailedInteraction;
 
     private bool isPlayerInReach = false;
-
-    private Animator animator;
 
     IEnumerator TeleportPlayer()
     {
@@ -50,7 +49,14 @@ public class Teleporter : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && isPlayerInReach)
         {
-            StartCoroutine("TeleportPlayer");
+            
+            if (lanceScript.isImmobile < 0.5f) {
+                StartCoroutine("TeleportPlayer");
+            }
+            else
+            {
+                OnPlayerFailedInteraction?.Invoke();
+            }
         }
     }
 }
