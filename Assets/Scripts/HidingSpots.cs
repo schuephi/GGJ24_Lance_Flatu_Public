@@ -13,11 +13,16 @@ public class HidingSpots : MonoBehaviour
 
     private LanceScript lanceScript;
 
+    private void Start()
+    {
+        lanceScript = GameObject.FindGameObjectWithTag("Lance").GetComponent<LanceScript>();
+    }
+
     private void Update()
     {
         if (isPlayerInReach && Input.GetKeyDown(KeyCode.E))
         {
-            if (lanceScript.Flatulence < 0.5f) {
+            if (lanceScript.IsImmobile) {
             OnPlayerHide?.Invoke();
             isPlayerInside = true;
             Debug.Log("Player tries to enter hiding spot");
@@ -30,9 +35,15 @@ public class HidingSpots : MonoBehaviour
 
         if (isPlayerInside && Input.GetKeyUp(KeyCode.E))
         {
-            OnPlayerUnhide?.Invoke();
-            isPlayerInside = false;
-            Debug.Log("Player leaves hiding spot");
+            if (lanceScript.IsImmobile) {
+                OnPlayerUnhide?.Invoke();
+                isPlayerInside = false;
+                Debug.Log("Player leaves hiding spot");
+            }
+            else
+            {
+                OnPlayerFailedInteraction?.Invoke();
+            }
         }
     }
 
