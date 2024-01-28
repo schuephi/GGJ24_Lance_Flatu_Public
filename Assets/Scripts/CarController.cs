@@ -6,6 +6,8 @@ public class CarController : MonoBehaviour
 {
     [SerializeField]
     private Rigidbody2D carRigidBody;
+    [SerializeField]
+    private GameObject Car;
 
     private void OnEnable()
     {
@@ -23,6 +25,14 @@ public class CarController : MonoBehaviour
         carRigidBody.MovePosition(startPos);
         carRigidBody.gameObject.transform.localScale = new Vector3(direction, 1, 1);
         carRigidBody.velocity = new Vector2(10*-direction, 0);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Limits"))
+        {
+            carRigidBody.velocity = Vector2.zero;
+        }
     }
 
     private void OnDisable()
