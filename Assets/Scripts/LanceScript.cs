@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 public class LanceScript : MonoBehaviour
 {
@@ -53,7 +54,6 @@ public class LanceScript : MonoBehaviour
                             Animator.SetBool("Fart_Start", false);
                             Animator.SetBool("Fart_Stop", true);
                         }
-
                         break;
                     }
                 default:
@@ -64,7 +64,7 @@ public class LanceScript : MonoBehaviour
         };
         rb2D = GetComponent<Rigidbody2D>();
 
-        var hidingSpots = FindObjectsOfType<HidingSpots>();
+        var hidingSpots = FindObjectsByType<HidingSpots>(FindObjectsSortMode.None);
         foreach (var hidingSpot in hidingSpots)
         {
             hidingSpot.OnPlayerHide.AddListener(OnPlayerHide);

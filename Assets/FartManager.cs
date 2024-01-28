@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class FartManager : MonoBehaviour
 {
-    public event Action<float> OnFart = delegate { }; 
+    public event Action<float> OnFart = delegate { };
+    public event Action<float> OnFartStopped = delegate { };
     public AudioSource FartSource;
 
     public List<AudioClip> ShortFarts;
@@ -17,5 +18,10 @@ public class FartManager : MonoBehaviour
         FartSource.clip = this.ShortFarts[randomIndex];
         FartSource.Play();
         OnFart(UnityEngine.Random.Range(0, 1f));
+    }
+
+    public void StopFart()
+    {
+        OnFartStopped(0);
     }
 }

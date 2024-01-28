@@ -7,19 +7,29 @@ public class FartListener : MonoBehaviour
 {
     [SerializeField]
     private float fartDetectDistance = 6f;
-    private LanceScript lance;
+    private FartManager fartManager;
 
-    private void Start()
+    private void Awake()
     {
-        lance = FindFirstObjectByType<LanceScript>();
-
+        fartManager = FindFirstObjectByType<LanceScript>().FartManager;
     }
 
-    private void HandleFartNoisDetection()
+    private void OnEnable()
     {
-        if (Vector3.Distance(lance.transform.position, transform.position) <= fartDetectDistance)
+        fartManager.OnFart += FartManager_OnFart;
+    }
+
+    private void FartManager_OnFart(float intensity)
+    {
+        if (Vector3.Distance(fartManager.transform.position, transform.position) <= fartDetectDistance)
         {
             Debug.Log("Fart recognized");
         }
     }
+
+    private void OnDisable()
+    {
+        fartManager.OnFart -= FartManager_OnFart;
+    }
+
 }
