@@ -4,15 +4,29 @@ using UnityEngine;
 
 public class CarController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private Rigidbody2D carRigidBody;
+
+    private void OnEnable()
     {
-        
+        StartCoroutine(DelayRegistration());
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator DelayRegistration()
     {
-        
+        yield return new WaitForEndOfFrame();
+        GameManager.Instance.OnLaunchCar += Instance_OnLaunchCar;
+    }
+
+    private void Instance_OnLaunchCar(Vector2 startPos, int direction)
+    {
+        carRigidBody.MovePosition(startPos);
+        carRigidBody.gameObject.transform.localScale = new Vector3(direction, 1, 1);
+        carRigidBody.velocity = new Vector2(10*-direction, 0);
+    }
+
+    private void OnDisable()
+    {
+        GameManager.Instance.OnLaunchCar -= Instance_OnLaunchCar;
     }
 }

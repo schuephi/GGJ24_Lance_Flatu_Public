@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(GameSceneManager))]
 public class GameManager : MonoBehaviour
 {
+    public event Action<Vector2, int> OnLaunchCar = delegate { };
     public static GameManager Instance;
     private GameSceneManager gameSceneManager;
 
@@ -36,5 +38,10 @@ public class GameManager : MonoBehaviour
     public void PrintCredits()
     {
 
+    }
+
+    public void LaunchCar(Vector2 pos, int direction)
+    {
+        OnLaunchCar(pos, direction);
     }
 }
