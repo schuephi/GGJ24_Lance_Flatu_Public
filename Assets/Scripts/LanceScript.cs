@@ -64,9 +64,12 @@ public class LanceScript : MonoBehaviour
         };
         rb2D = GetComponent<Rigidbody2D>();
 
-        var hidingSpot = FindFirstObjectByType<HidingSpots>();
-        hidingSpot.OnPlayerHide.AddListener(OnPlayerHide);
-        hidingSpot.OnPlayerUnhide.AddListener(OnPlayerUnhide);
+        var hidingSpots = FindObjectsOfType<HidingSpots>();
+        foreach (var hidingSpot in hidingSpots)
+        {
+            hidingSpot.OnPlayerHide.AddListener(OnPlayerHide);
+            hidingSpot.OnPlayerUnhide.AddListener(OnPlayerUnhide);
+        }
     }
 
     // Update is called once per frame
