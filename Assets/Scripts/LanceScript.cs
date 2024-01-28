@@ -57,7 +57,7 @@ public class LanceScript : MonoBehaviour
                             if (InFlatuenceMode)
                             {
                                 Animator.SetBool("Fart_Start", true);
-                                FartManager.Fart();
+                                FartManager.Fart(Flatulence);
                             }
                         }
 

@@ -95,6 +95,7 @@ public class GoonMovemenet : MonoBehaviour
 
     public void StartInvestigation(Vector3 targetPosition)
     {
+        if (GoonMode == GoonMode.LOOKING_AROUND) return;
         Debug.Log("Start investigation");
         investigationStartPoint = this.transform.position;
         this.TargetPoint = targetPosition;
