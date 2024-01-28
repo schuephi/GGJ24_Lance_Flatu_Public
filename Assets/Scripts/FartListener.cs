@@ -1,18 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class FartListener : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private float fartDetectDistance = 6f;
+    private LanceScript lance;
+
+    private void Start()
     {
-        
+        lance = FindFirstObjectByType<LanceScript>();
+
     }
 
-    // Update is called once per frame
-    void Update()
+    private void HandleFartNoisDetection()
     {
-        
+        if (Vector3.Distance(lance.transform.position, transform.position) <= fartDetectDistance)
+        {
+            Debug.Log("Fart recognized");
+        }
     }
 }
