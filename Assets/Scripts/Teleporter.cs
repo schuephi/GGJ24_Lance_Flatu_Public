@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using Microsoft.Unity.VisualStudio.Editor;
+using UnityEngine.UI;
 
 
 public class Teleporter : MonoBehaviour
@@ -11,6 +13,9 @@ public class Teleporter : MonoBehaviour
 
     private bool isPlayerInReach = false;
     private LanceScript lanceScript;
+
+    [SerializeField]
+    private UnityEngine.UI.Image keyIndicator;
 
     IEnumerator TeleportPlayer()
     {
@@ -30,6 +35,7 @@ public class Teleporter : MonoBehaviour
     private void Start()
     {
         lanceScript = GameObject.FindGameObjectWithTag("Lance").GetComponent<LanceScript>();
+        keyIndicator.gameObject.SetActive(false);
     }
 
 
@@ -38,6 +44,7 @@ public class Teleporter : MonoBehaviour
         if (collision.CompareTag("Lance"))
         {
             isPlayerInReach = true;
+            keyIndicator.gameObject.SetActive(true);
         }
     }
 
@@ -46,6 +53,7 @@ public class Teleporter : MonoBehaviour
         if (collision.CompareTag("Lance"))
         {
             isPlayerInReach = false;
+            keyIndicator.gameObject.SetActive(false);
         }
     }
 
