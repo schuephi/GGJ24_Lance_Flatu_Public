@@ -1,7 +1,12 @@
+using System;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class InteractablesHiding : MonoBehaviour
+public class HidingSpots : MonoBehaviour
 {
+    public UnityEvent OnPlayerHide;
+    public UnityEvent OnPlayerUnhide;
+
     private bool isPlayerInside = false;
     private bool isPlayerInReach = false;
     private Animator animator;
@@ -13,31 +18,21 @@ public class InteractablesHiding : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.E) && isPlayerInside) // Leave hiding spot if already hidden
+        if (isPlayerInReach && Input.GetKeyDown(KeyCode.E))
         {
-            UnhidePlayer();
+            OnPlayerHide?.Invoke();
+            isPlayerInside = true;
+            Debug.Log("Player tries to enter hiding spot");
         }
-        else if (Input.GetKeyDown(KeyCode.E) && !isPlayerInside && isPlayerInReach) // Enter Hiding spot if not already hidden and player is in reach
+
+        if (isPlayerInside && Input.GetKeyUp(KeyCode.E))
         {
-            HidePlayer();
+            OnPlayerUnhide?.Invoke();
+            isPlayerInside = false;
+            Debug.Log("Player leaves hiding spot");
         }
     }
 
-    private void HidePlayer()
-    {
-        // Play hide animation
-        //animator.SetBool("IsHidden", true);
-
-        isPlayerInside = true;
-    }
-
-    private void UnhidePlayer()
-    {
-        // Play unhide animation
-        //animator.SetBool("IsHidden", false);
-        
-        isPlayerInside = false;
-    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Lance"))
