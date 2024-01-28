@@ -9,12 +9,6 @@ public class HidingSpots : MonoBehaviour
 
     private bool isPlayerInside = false;
     private bool isPlayerInReach = false;
-    private Animator animator;
-
-    private void Start()
-    {
-        animator = GetComponent<Animator>();
-    }
 
     private void Update()
     {
