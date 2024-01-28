@@ -10,6 +10,7 @@ public class GameSceneManager : MonoBehaviour
         StartScene,
         IntroScene,
         StealthLevel1Scene,
+        StealthLevel2Scene,
     }
 
     public void LoadScene(Scene scene)

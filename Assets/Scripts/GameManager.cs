@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public event Action<Vector2, int> OnLaunchCar = delegate { };
     public event Action OnCarReachedGoal = delegate { };
     public event Action OnFlatuencesStart = delegate { };
+    public event Action OnShowCredits = delegate { };
+    public event Action OnHideCredits = delegate { };
     public static GameManager Instance;
     private GameSceneManager gameSceneManager;
 
@@ -34,12 +36,17 @@ public class GameManager : MonoBehaviour
 
     public void LoadLevel()
     {
-        gameSceneManager.LoadScene(GameSceneManager.Scene.StealthLevel1Scene);
+        gameSceneManager.LoadScene(GameSceneManager.Scene.StealthLevel2Scene);
     }
 
     public void PrintCredits()
     {
+        OnShowCredits();
+    }
 
+    public void HideCredits()
+    {
+        OnHideCredits();
     }
 
     public void LaunchCar(Vector2 pos, int direction)

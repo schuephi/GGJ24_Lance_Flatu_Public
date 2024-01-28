@@ -46,6 +46,7 @@ public class StoryIntroManager : MonoBehaviour
     {
         yield return new WaitForSeconds(15f);
         lanceScript.InFlatuenceMode = true;
+        lanceScript.Flatulence = 0;
         lanceScript.FartManager.Fart();
     }
 
