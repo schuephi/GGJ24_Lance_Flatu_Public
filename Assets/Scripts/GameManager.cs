@@ -66,6 +66,6 @@ public class GameManager : MonoBehaviour
 
     public void OnGameGoalReached()
     {
-
+        gameSceneManager.LoadScene(GameSceneManager.Scene.WinScene);
     }
 }

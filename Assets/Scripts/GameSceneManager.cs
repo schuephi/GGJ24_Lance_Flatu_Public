@@ -11,6 +11,7 @@ public class GameSceneManager : MonoBehaviour
         IntroScene,
         StealthLevel1Scene,
         StealthLevel2Scene,
+        WinScene
     }
 
     public void LoadScene(Scene scene)
