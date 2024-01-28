@@ -80,6 +80,7 @@ public class LanceScript : MonoBehaviour
             }           
         };
         rb2D = GetComponent<Rigidbody2D>();
+        
 
         var hidingSpots = FindObjectsByType<HidingSpots>(FindObjectsSortMode.None);
         foreach (var hidingSpot in hidingSpots)
@@ -105,6 +106,12 @@ public class LanceScript : MonoBehaviour
             this.isDead = true;
             return;
         }
+       
+        if(InFlatuenceMode)
+        {
+            Animator.SetFloat("Fartiness", Flatulence);
+        }
+       
         var move = moveVector * MovementSpeed * Time.fixedDeltaTime;
         rb2D.velocity = move;
         HandleFlatuenceCharge(move);
