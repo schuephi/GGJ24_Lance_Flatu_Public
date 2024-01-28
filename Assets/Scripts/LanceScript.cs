@@ -4,6 +4,8 @@ using System;
 
 public class LanceScript : MonoBehaviour
 {
+    [SerializeField]
+    private float flatulenceChargeSpeed = 1f;
     public float MovementSpeed = 1.0f;
     public PlayerInput Input;
 
@@ -92,9 +94,11 @@ public class LanceScript : MonoBehaviour
             return;
         }
         var move = moveVector * MovementSpeed * Time.fixedDeltaTime;
-        //this.transform.Translate(move.x, move.y, 0f);
         rb2D.velocity = move;
-        //rb2D.MovePosition(new Vector2(rb2D.position.x + move.x, rb2D.position.y + move.y));
+        if (Flatulence < 1)
+        {
+            Flatulence += move.magnitude * flatulenceChargeSpeed;
+        }
     }
 
     private void OnPlayerHide()
