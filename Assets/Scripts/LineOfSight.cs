@@ -70,12 +70,15 @@ public class LineOfSight : MonoBehaviour
                     Alert.gameObject.SetActive(true);
                     var lanceScript = hits[0].transform.gameObject.GetComponent<LanceScript>();
                     lanceScript.Heat += HeatDamage * Time.deltaTime;
-                    GoonHeat = Mathf.Clamp(GoonHeat + GoonInvestigationHeatIncreasePerS * Time.deltaTime, 0, 100);
-                    
-                    if(GoonHeat >= 100 && Goon.GoonMode == GoonMode.PATROL)
+                    if (Goon.GoonMode == GoonMode.PATROL)
                     {
-                        this.Goon.StartInvestigation(hits[0].transform.position);
-                        this.GoonHeat = 0;
+                        GoonHeat = Mathf.Clamp(GoonHeat + GoonInvestigationHeatIncreasePerS * Time.deltaTime, 0, 100);
+
+                        if (GoonHeat >= 100)
+                        {
+                            this.Goon.StartInvestigation(hits[0].transform.position);
+                            this.GoonHeat = 0;
+                        }
                     }
                 }
                 else
