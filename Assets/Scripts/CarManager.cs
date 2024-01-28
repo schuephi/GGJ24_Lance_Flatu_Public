@@ -32,6 +32,7 @@ public class CarManager : MonoBehaviour
     {
         yield return new WaitForSeconds(Random.Range(carLaunchRange.x, carLaunchRange.y));
         var index = Random.Range(0, positions.Length);
+        Debug.LogWarning("Car starts at point: " + index);
         GameManager.Instance.LaunchCar(new Vector2(positions[index].position.x, positions[index].position.y), directions[index]);
     }
 

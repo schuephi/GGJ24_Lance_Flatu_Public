@@ -20,9 +20,9 @@ public class CarController : MonoBehaviour
 
     private void Instance_OnLaunchCar(Vector2 startPos, int direction)
     {
-        carRigidBody.MovePosition(startPos);
+        carRigidBody.transform.position = startPos; // MovePosition(startPos);
         carRigidBody.gameObject.transform.localScale = new Vector3(direction, 1, 1);
-        carRigidBody.velocity = new Vector2(10*-direction, 0);
+        carRigidBody.velocity = new Vector2(10 * -direction, 0);
     }
 
     private void OnDisable()
