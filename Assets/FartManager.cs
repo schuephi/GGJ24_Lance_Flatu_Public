@@ -28,20 +28,20 @@ public class FartManager : MonoBehaviour
     private float StartTime;
     public ACTIVE_MODE ActiveMode;
 
-    public void SelectRandomFart()
+    public FartData SelectRandomFart()
     {
         var randomIndex = Mathf.Clamp(Mathf.RoundToInt(UnityEngine.Random.Range(0, Farts.Count)), 0, Farts.Count - 1);
-        ActiveFart.Fart = this.Farts[randomIndex];
+        return this.Farts[randomIndex];
     }
 
-    public void SelectFartByIntensity(float intensity)
+    public FartData SelectFartByIntensity(float intensity)
     {
-        ActiveFart.Fart = Farts.Where(x => x.Intensity <= intensity).OrderBy(x => (intensity - x.Intensity)).First();
+        return Farts.Where(x => x.Intensity <= intensity).OrderBy(x => (intensity - x.Intensity)).First();
     }
 
     public void Fart(float intensity)
     {
-        SelectFartByIntensity(intensity);
+        ActiveFart.Fart = SelectFartByIntensity(intensity);
         if (ActiveFart == null) return;
 
         FartSource.clip = ActiveFart.Fart.StartFart;
@@ -50,6 +50,14 @@ public class FartManager : MonoBehaviour
         StartTime = Time.time;
 
         OnFart(intensity);
+    }
+
+    public void FartSingle()
+    {
+        var fart = SelectRandomFart();
+        FartSource.clip = fart.EndFart;
+        FartSource.loop = false;
+        FartSource.Play();
     }
 
     public void Update()

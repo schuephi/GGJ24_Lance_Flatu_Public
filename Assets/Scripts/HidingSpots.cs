@@ -30,6 +30,7 @@ public class HidingSpots : MonoBehaviour
             if (!lanceScript.IsImmobile) {
             OnPlayerHide?.Invoke();
             isPlayerInside = true;
+            lanceScript.IsHidden = true;
 
             Debug.Log("Player tries to enter hiding spot");
             }
@@ -43,6 +44,7 @@ public class HidingSpots : MonoBehaviour
         {
             OnPlayerUnhide?.Invoke();
             isPlayerInside = false;
+            lanceScript.IsHidden = false;
             Debug.Log("Player leaves hiding spot");
         }
     }

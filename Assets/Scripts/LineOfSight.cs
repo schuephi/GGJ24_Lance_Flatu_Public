@@ -65,7 +65,7 @@ public class LineOfSight : MonoBehaviour
             
             if (Physics2D.Raycast(this.transform.position, lanceDirection, filter, hits, ConeDistance) > 0)
             {
-                if (hits[0].transform.gameObject.tag == "Lance")
+                if (hits[0].transform.gameObject.tag == "Lance" && Lance.IsHidden == false)
                 {
                     Alert.gameObject.SetActive(true);
                     var lanceScript = hits[0].transform.gameObject.GetComponent<LanceScript>();
