@@ -1,8 +1,4 @@
-using System;
-using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
 
 public class GoldenThrone : MonoBehaviour
 {
