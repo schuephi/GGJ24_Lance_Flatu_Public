@@ -7,7 +7,8 @@ public class LanceScript : MonoBehaviour
 {
     [SerializeField]
     private float flatulenceChargeSpeed = 1f;
-    public float MovementSpeed = 1.0f;
+    public float CurrentSpeed = 0f;
+    public float MaxSpeed = 100f;
     public PlayerInput Input;
 
     public Animator Animator;
@@ -17,7 +18,9 @@ public class LanceScript : MonoBehaviour
 
     private Vector2 moveVector = Vector2.zero; 
 
-    public float Heat = 0;
+    public float CurrentHeat = 0;
+    public float MaxHeat = 100;
+
     public bool isDead = false;
 
     public bool InFlatuenceMode { get; set; }
@@ -26,7 +29,12 @@ public class LanceScript : MonoBehaviour
     public bool IsHidden;
     private readonly float flatuenceDownScaling = 0.001f;
     private readonly float minChargeValue = 0.05f;
-    private readonly float heatReductionMultiplicator = 2.5f;
+
+    public AnimationCurve HeatReductionFactor = AnimationCurve.Linear(0, 0, 1, 1);
+    private float timeSinceLastHeatReceived = 0f;
+
+    public float FartCooldownInS = 2f;
+    private float timeSinceLastFart = 0;
 
     // Start is called before the first frame update
     private void Start()
@@ -59,8 +67,16 @@ public class LanceScript : MonoBehaviour
                         {
                             if (InFlatuenceMode)
                             {
-                                Animator.SetBool("Fart_Start", true);
-                                FartManager.Fart(Flatulence);
+                                if (timeSinceLastFart >= FartCooldownInS)
+                                {
+                                    Animator.SetBool("Fart_Start", true);
+                                    FartManager.Fart(Flatulence);
+                                    timeSinceLastFart = 0f;
+                                }
+                                else
+                                {
+                                    this.OnPlayerFailedInteraction();
+                                }
                             }
                         }
 
@@ -89,11 +105,13 @@ public class LanceScript : MonoBehaviour
         {
             hidingSpot.OnPlayerHide.AddListener(OnPlayerHide);
             hidingSpot.OnPlayerUnhide.AddListener(OnPlayerUnhide);
+            hidingSpot.OnPlayerFailedInteraction.AddListener(OnPlayerFailedInteraction);
         }
         var teleporter = FindObjectsByType<Teleporter>(FindObjectsSortMode.None);
         foreach (var teleport in teleporter)
         {
             teleport.OnPlayerJump.AddListener(OnPlayerJump);
+            teleport.OnPlayerFailedInteraction.AddListener(OnPlayerFailedInteraction);
         }
     }
 
@@ -102,7 +120,7 @@ public class LanceScript : MonoBehaviour
     {
         if (this.isDead) return;
 
-        if(Heat >= 100)
+        if(CurrentHeat >= 100)
         {
             this.Animator.SetBool("Die", true);
             this.isDead = true;
@@ -114,14 +132,26 @@ public class LanceScript : MonoBehaviour
             Animator.SetFloat("Fartiness", Flatulence);
         }
        
-        var move = moveVector * MovementSpeed * Time.fixedDeltaTime;
+        var move = moveVector * CurrentSpeed * Time.fixedDeltaTime;
         rb2D.velocity = move;
-        Heat -= Time.fixedDeltaTime * heatReductionMultiplicator;
-        if (Heat < 0)
-        {
-            Heat = 0;
-        }
+
+        timeSinceLastHeatReceived += Time.fixedDeltaTime;
+        timeSinceLastFart += Time.fixedDeltaTime;
+
+        AddHeat(-Time.fixedDeltaTime * HeatReductionFactor.Evaluate(timeSinceLastHeatReceived));
+
         HandleFlatuenceCharge(move);
+        this.CurrentSpeed = Mathf.Clamp(this.MaxSpeed - this.MaxSpeed * Flatulence, 0, MaxSpeed);
+    }
+
+    public void AddHeat(float heat)
+    {
+        CurrentHeat = Mathf.Clamp(CurrentHeat + heat, 0, MaxHeat);
+
+        if (heat > 0)
+        {
+            timeSinceLastHeatReceived = 0;
+        }
     }
 
     private void HandleFlatuenceCharge(Vector2 move)

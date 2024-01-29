@@ -16,6 +16,6 @@ public class HeatBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rt.sizeDelta= new Vector2(Mathf.Min(lance.Heat, 100) / 100 * 285, rt.sizeDelta.y);
+        rt.sizeDelta= new Vector2(Mathf.Min(lance.CurrentHeat, 100) / 100 * 285, rt.sizeDelta.y);
     }
 }

@@ -28,6 +28,8 @@ public class FartManager : MonoBehaviour
     private float StartTime;
     public ACTIVE_MODE ActiveMode;
 
+
+
     public FartData SelectRandomFart()
     {
         var randomIndex = Mathf.Clamp(Mathf.RoundToInt(UnityEngine.Random.Range(0, Farts.Count)), 0, Farts.Count - 1);
@@ -41,6 +43,7 @@ public class FartManager : MonoBehaviour
 
     public void Fart(float intensity)
     {
+       
         ActiveFart.Fart = SelectFartByIntensity(intensity);
         if (ActiveFart == null) return;
 
@@ -50,6 +53,8 @@ public class FartManager : MonoBehaviour
         StartTime = Time.time;
 
         OnFart(intensity);
+
+        
     }
 
     public void FartSingle()
@@ -62,6 +67,7 @@ public class FartManager : MonoBehaviour
 
     public void Update()
     {
+
         if (ActiveFart.Fart == null) return;
 
         switch (ActiveMode)
