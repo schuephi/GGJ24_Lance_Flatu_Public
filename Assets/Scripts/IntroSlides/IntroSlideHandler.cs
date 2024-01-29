@@ -7,6 +7,7 @@ using System;
 public class IntroSlideHandler : MonoBehaviour, IIntroSlide
 {
     public event Action OnPrintText = delegate { };
+    public event Action OnStop = delegate { };
     [SerializeField]
     private bool useFadeEffect = true;
     [SerializeField]
@@ -31,6 +32,7 @@ public class IntroSlideHandler : MonoBehaviour, IIntroSlide
         if (introManager is not null)
         {
             introManager.OnLoadSlide += IntroManager_OnLoadSlide;
+            introManager.OnStopSlide += IntroManager_OnStopSlide;
         }
     }
 
@@ -65,6 +67,16 @@ public class IntroSlideHandler : MonoBehaviour, IIntroSlide
                 canvasGroup.alpha = 1;
                 OnPrintText();
             }
+        }
+    }
+
+    private void IntroManager_OnStopSlide(IIntroSlide slide)
+    {
+        if (slide.Equals(this))
+        {
+            StopAllCoroutines();
+            OnStop();
+            //ReportTextPrinted();
         }
     }
 

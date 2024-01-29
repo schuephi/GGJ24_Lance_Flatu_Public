@@ -19,6 +19,7 @@ public class IntroAudioHandler : MonoBehaviour
         if (slideHandler is not null)
         {
             slideHandler.OnPrintText += SlideHandler_OnPrintText;
+            slideHandler.OnStop += SlideHandler_OnStop;
         }
     }
 
@@ -27,11 +28,17 @@ public class IntroAudioHandler : MonoBehaviour
         audioSource.Play();
     }
 
+    private void SlideHandler_OnStop()
+    {
+        audioSource.Stop();
+    }
+
     private void OnDisable()
     {
         if (slideHandler is not null)
         {
             slideHandler.OnPrintText -= SlideHandler_OnPrintText;
+            slideHandler.OnStop -= SlideHandler_OnStop;
         }
     }
 }

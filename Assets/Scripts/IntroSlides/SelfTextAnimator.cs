@@ -25,6 +25,7 @@ public class SelfTextAnimator : MonoBehaviour
         if (slideHandler is not null)
         {
             slideHandler.OnPrintText += SlideHandler_OnPrintText;
+            slideHandler.OnStop += SlideHandler_OnStop;
         }
         blendEffect.OnTextTyped += BlendEffect_OnTextTyped;
     }
@@ -32,6 +33,12 @@ public class SelfTextAnimator : MonoBehaviour
     private void SlideHandler_OnPrintText()
     {
         blendEffect.SetText(textToWrite);
+    }
+
+    private void SlideHandler_OnStop()
+    {
+        StopAllCoroutines();
+        blendEffect.StopAllCoroutines();
     }
 
     private void BlendEffect_OnTextTyped()

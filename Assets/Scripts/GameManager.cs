@@ -97,4 +97,9 @@ public class GameManager : MonoBehaviour
     {
         gameSceneManager.LoadScene(GameSceneManager.Scene.WinScene);
     }
+
+    public void LoadStartScene()
+    {
+        gameSceneManager.LoadScene(GameSceneManager.Scene.StartScene);
+    }
 }
