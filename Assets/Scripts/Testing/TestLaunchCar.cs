@@ -15,7 +15,7 @@ public class TestLaunchCar : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-            GameManager.Instance.LaunchCar(new Vector2(positions[currentIndex].position.x, positions[currentIndex].position.y), directions[currentIndex++ % positions.Length]);
+            GameManager.Instance.LaunchCar(new Vector2(positions[currentIndex].position.x, positions[currentIndex].position.y), new Vector2(directions[currentIndex++ % positions.Length], 0));
         }
     }
 }

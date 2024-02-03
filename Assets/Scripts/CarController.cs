@@ -1,11 +1,13 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CarController : MonoBehaviour
 {
     [SerializeField]
     private Rigidbody2D carRigidBody;
+
+    [SerializeField]
+    private Vector2 CarSpeed;
 
     private void OnEnable()
     {
@@ -18,11 +20,12 @@ public class CarController : MonoBehaviour
         GameManager.Instance.OnLaunchCar += Instance_OnLaunchCar;
     }
 
-    private void Instance_OnLaunchCar(Vector2 startPos, int direction)
+    private void Instance_OnLaunchCar(Vector2 startPos, Vector2 direction)
     {
         carRigidBody.transform.position = startPos; // MovePosition(startPos);
-        carRigidBody.gameObject.transform.localScale = new Vector3(direction, 1, 1);
-        carRigidBody.velocity = new Vector2(10 * -direction, 0);
+        carRigidBody.gameObject.transform.localScale = new Vector3(direction.x > 0 ? -1 : 1, 1, 1);
+        var speed = Random.Range(CarSpeed.x, CarSpeed.y);
+        carRigidBody.velocity = direction * speed;
     }
 
     private void OnDisable()

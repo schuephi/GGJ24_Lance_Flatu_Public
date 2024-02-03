@@ -50,6 +50,8 @@ public class LanceScript : MonoBehaviour
                     {
                         moveVector = context.action.ReadValue<Vector2>();
 
+                        Debug.Log(moveVector);
+
                         Animator.SetFloat("Speed", moveVector.magnitude > 0 ? 1 : 0);
 
                         if(moveVector.x != 0) {

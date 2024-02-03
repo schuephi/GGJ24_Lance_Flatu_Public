@@ -1,3 +1,4 @@
+using Assets;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,11 +6,10 @@ using UnityEngine;
 public class CarManager : MonoBehaviour
 {
     [SerializeField]
-    private Transform[] positions;
+    private Vector2 CarSpawnTimeRange;
+
     [SerializeField]
-    private int[] directions;
-    [SerializeField]
-    private Vector2 carLaunchRange;
+    private List<CarStartPosition> carSpawnZones;
 
     private void Start()
     {
@@ -30,10 +30,10 @@ public class CarManager : MonoBehaviour
 
     private IEnumerator LaunchCar()
     {
-        yield return new WaitForSeconds(Random.Range(carLaunchRange.x, carLaunchRange.y));
-        var index = Random.Range(0, positions.Length);
-        Debug.LogWarning("Car starts at point: " + index);
-        GameManager.Instance.LaunchCar(new Vector2(positions[index].position.x, positions[index].position.y), directions[index]);
+        yield return new WaitForSeconds(Random.Range(CarSpawnTimeRange.x, CarSpawnTimeRange.y));
+        var index = Random.Range(0, carSpawnZones.Count);
+        var point = carSpawnZones[index].GetRandomPosition().ToVector2();
+        GameManager.Instance.LaunchCar(point, carSpawnZones[index].Direction);
     }
 
     private void OnDisable()

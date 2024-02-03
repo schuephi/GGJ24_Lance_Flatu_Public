@@ -7,7 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(GameSceneManager))]
 public class GameManager : MonoBehaviour
 {
-    public event Action<Vector2, int> OnLaunchCar = delegate { };
+    public event Action<Vector2, Vector2> OnLaunchCar = delegate { };
     public event Action OnCarReachedGoal = delegate { };
     public event Action OnFlatuencesStart = delegate { };
     public event Action OnShowCredits = delegate { };
@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
         OnHideLooseScreen();
     }
 
-    public void LaunchCar(Vector2 pos, int direction)
+    public void LaunchCar(Vector2 pos, Vector2 direction)
     {
         OnLaunchCar(pos, direction);
     }

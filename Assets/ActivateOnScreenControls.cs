@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class ActivateOnScreenControls : MonoBehaviour
@@ -8,7 +9,7 @@ public class ActivateOnScreenControls : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (Application.isMobilePlatform)
+        if (Application.isMobilePlatform || Application.isEditor)
         {
             foreach (var control in OnScreenControls)
             {
