@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,6 +14,7 @@ public class HidingSpots : MonoBehaviour
     private UnityEngine.UI.Image keyIndicator;
 
     private LanceScript lanceScript;
+    public float MaxFlatulenceForInteraction = 0.6f;
 
     private void Start()
     {
@@ -34,7 +36,10 @@ public class HidingSpots : MonoBehaviour
             }
             else
             {
-                OnPlayerFailedInteraction?.Invoke();
+                if (lanceScript.Flatulence > MaxFlatulenceForInteraction)
+                {
+                    OnPlayerFailedInteraction?.Invoke();
+                }
             }
         }
 

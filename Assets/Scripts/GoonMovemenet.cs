@@ -28,10 +28,13 @@ public class GoonMovemenet : MonoBehaviour
     public Vector3 investigationStartPoint;
     public float LookAroundTime = 1f;
 
-
+    public AudioClip StartInvestigationClip;
+    public AudioClip StopInvestigationClip;
+    private AudioSource AudioSource;
     void Start()
     {
         TargetPoint = this.transform.position;
+        AudioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -96,6 +99,10 @@ public class GoonMovemenet : MonoBehaviour
     public void StartInvestigation(Vector3 targetPosition)
     {
         if (GoonMode == GoonMode.LOOKING_AROUND) return;
+
+        AudioSource.clip = StartInvestigationClip;
+        AudioSource.Play();
+
         Debug.Log("Start investigation");
         investigationStartPoint = this.transform.position;
         this.TargetPoint = targetPosition;
@@ -122,6 +129,11 @@ public class GoonMovemenet : MonoBehaviour
         }
 
         GoonMode = GoonMode.MOVE_BACK;
+
+        AudioSource.Stop();
+        AudioSource.clip = StopInvestigationClip;
+        AudioSource.Play();
+
         TargetPoint = investigationStartPoint;
     }
 }
