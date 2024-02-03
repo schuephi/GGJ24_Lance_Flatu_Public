@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,6 +37,8 @@ public class LanceScript : MonoBehaviour
     public float FartCooldownInS = 2f;
     private float timeSinceLastFart = 0;
 
+    private IInteractable currentInteractable; 
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -47,18 +50,12 @@ public class LanceScript : MonoBehaviour
                     {
                         moveVector = context.action.ReadValue<Vector2>();
 
-                        Animator.SetFloat("Speed", 1);
+                        Animator.SetFloat("Speed", moveVector.magnitude > 0 ? 1 : 0);
 
                         if(moveVector.x != 0) {
                             Animator.gameObject.transform.localScale = new Vector3(moveVector.x > 0 ? -1 : 1, 1, 1);
                         }
 
-                        if (context.phase == InputActionPhase.Canceled)
-                        {
-                            Animator.SetFloat("Speed", 0);
-                            moveVector = Vector2.zero;
-
-                        }
                         break;
                     }
                 case "Fart":
@@ -87,6 +84,21 @@ public class LanceScript : MonoBehaviour
                                 Animator.SetBool("Fart_Start", false);
                                 Animator.SetBool("Fart_Stop", true);
                                 FartManager.StopFart();
+                            }
+                        }
+                        break;
+                    }
+                case "Use":
+                    {
+                        if(currentInteractable != null)
+                        {
+                            if (context.phase == InputActionPhase.Started)
+                            {
+                                currentInteractable.StartInteraction();
+                            }
+                            if(context.canceled == true)
+                            {
+                                currentInteractable.StopInteraction();
                             }
                         }
                         break;
@@ -152,6 +164,16 @@ public class LanceScript : MonoBehaviour
         {
             timeSinceLastHeatReceived = 0;
         }
+    }
+
+    public void SetCurrentInteractable(IInteractable interactable)
+    {
+        if(currentInteractable != null)
+        {
+            currentInteractable.StopInteraction();
+        }
+
+        currentInteractable = interactable;
     }
 
     private void HandleFlatuenceCharge(Vector2 move)

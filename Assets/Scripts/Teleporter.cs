@@ -1,10 +1,11 @@
+using Assets.Scripts;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
 
-public class Teleporter : MonoBehaviour
+public class Teleporter : MonoBehaviour, IInteractable
 {
     public Transform destination; // The destination teleporter
     public UnityEvent OnPlayerJump;
@@ -26,9 +27,9 @@ public class Teleporter : MonoBehaviour
         {
             Lance.transform.position = Vector3.Lerp(PlayerStartPosition, destination.position, t);
             t += Time.deltaTime;
-            Debug.Log(t);
             yield return null;
         }
+        lanceScript.SetCurrentInteractable(null);
     }
 
     private void Start()
@@ -44,6 +45,7 @@ public class Teleporter : MonoBehaviour
         {
             isPlayerInReach = true;
             keyIndicator.gameObject.SetActive(true);
+            lanceScript.SetCurrentInteractable(this);
         }
     }
 
@@ -53,14 +55,13 @@ public class Teleporter : MonoBehaviour
         {
             isPlayerInReach = false;
             keyIndicator.gameObject.SetActive(false);
+            lanceScript.SetCurrentInteractable(null);
         }
     }
 
-
-
-    private void Update()
+    public void StartInteraction()
     {
-        if (Input.GetKeyDown(KeyCode.E) && isPlayerInReach)
+        if (isPlayerInReach)
         {
 
             if (!lanceScript.IsImmobile)
@@ -72,5 +73,10 @@ public class Teleporter : MonoBehaviour
                 OnPlayerFailedInteraction?.Invoke();
             }
         }
+    }
+
+    public void StopInteraction()
+    {
+       
     }
 }

@@ -1,8 +1,8 @@
-using TMPro;
+using Assets.Scripts;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class HidingSpots : MonoBehaviour
+public class HidingSpots : MonoBehaviour, IInteractable
 {
     public UnityEvent OnPlayerHide;
     public UnityEvent OnPlayerUnhide;
@@ -22,9 +22,30 @@ public class HidingSpots : MonoBehaviour
         keyIndicator.gameObject.SetActive(false);
     }
 
-    private void Update()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (isPlayerInReach && Input.GetKeyDown(KeyCode.E))
+        if (collision.CompareTag("Lance"))
+        {
+            isPlayerInReach = true;
+            keyIndicator.gameObject.SetActive(true);
+            lanceScript.SetCurrentInteractable(this);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Lance"))
+        {
+            isPlayerInReach = false;
+            keyIndicator.gameObject.SetActive(false);
+            lanceScript.SetCurrentInteractable(null);
+            StopInteraction();
+        }
+    }
+
+    public void StartInteraction()
+    {
+        if (isPlayerInReach)
         {
             if (!lanceScript.IsImmobile)
             {
@@ -42,8 +63,11 @@ public class HidingSpots : MonoBehaviour
                 }
             }
         }
+    }
 
-        if (isPlayerInside && (Input.GetKeyUp(KeyCode.E) || isPlayerInReach == false))
+    public void StopInteraction()
+    {
+        if (isPlayerInside || isPlayerInReach == false)
         {
             OnPlayerUnhide?.Invoke();
             isPlayerInside = false;
@@ -51,23 +75,4 @@ public class HidingSpots : MonoBehaviour
             Debug.Log("Player leaves hiding spot");
         }
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Lance"))
-        {
-            isPlayerInReach = true;
-            keyIndicator.gameObject.SetActive(true);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Lance"))
-        {
-            isPlayerInReach = false;
-            keyIndicator.gameObject.SetActive(false);
-        }
-    }
-
 }
