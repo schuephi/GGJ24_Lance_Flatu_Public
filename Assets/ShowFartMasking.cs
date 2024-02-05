@@ -26,14 +26,9 @@ public class ShowFartMasking : MonoBehaviour
         }
     }
 
-    private void OnTr(Collision2D collision)
-    {
-       
-    }
-
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (Button.active)
+        if (Button.activeSelf)
         {
             Button.SetActive(false);
         }

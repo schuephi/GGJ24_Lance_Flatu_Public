@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ActivateOnScreenControls : MonoBehaviour
 {
-
+    public ReloadScene ReloadScene;
     public List<GameObject> OnScreenControls;
     // Start is called before the first frame update
     void Start()
@@ -15,6 +15,8 @@ public class ActivateOnScreenControls : MonoBehaviour
             {
                 control.SetActive(true);
             }
+
+            ReloadScene.SetInputMode(1);
         }
     }
 

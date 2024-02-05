@@ -50,8 +50,6 @@ public class LanceScript : MonoBehaviour
                     {
                         moveVector = context.action.ReadValue<Vector2>();
 
-                        Debug.Log(moveVector);
-
                         Animator.SetFloat("Speed", moveVector.magnitude > 0 ? 1 : 0);
 
                         if(moveVector.x != 0) {
@@ -96,11 +94,14 @@ public class LanceScript : MonoBehaviour
                         {
                             if (context.phase == InputActionPhase.Started)
                             {
-                                currentInteractable.StartInteraction();
-                            }
-                            if(context.canceled == true)
-                            {
-                                currentInteractable.StopInteraction();
+                                if(IsHidden)
+                                {
+                                    currentInteractable.StopInteraction();
+                                }
+                                else
+                                {
+                                    currentInteractable.StartInteraction();
+                                }                             
                             }
                         }
                         break;
@@ -200,28 +201,26 @@ public class LanceScript : MonoBehaviour
     private void OnPlayerHide()
     {
         // Handle player hide animation
-        Debug.Log("Start jump in animation");
-        Animator.SetBool("Jump_In", true);
+        Animator.SetTrigger("Jump_In");
+        IsHidden = true;
     }
 
     private void OnPlayerUnhide()
     {
         // Handle player unhide animation
-        Debug.Log("Start jump out animation");
-        Animator.SetBool("Jump_Out", true);
+        Animator.SetTrigger("Jump_Out");
+        IsHidden = false;
     }
 
     private void OnPlayerJump()
     {
         // Handle player hide animation
-        Debug.Log("Start jump in animation");
         Animator.SetTrigger("Jump_Over");
     }
 
     private void OnPlayerFailedInteraction()
     {
         // Handle player hide animation
-        Debug.Log("Start fail animation");
         Animator.SetTrigger("Jump_Fail");
     }
 
