@@ -287,7 +287,7 @@
                     "name": "",
                     "id": "837a28a4-5d62-449d-9c7b-0c01007caf92",
                     "path": "<Keyboard>/e",
-                    "interactions": "Hold",
+                    "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse;Touch",
                     "action": "Use",

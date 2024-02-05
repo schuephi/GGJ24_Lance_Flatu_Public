@@ -66,7 +66,7 @@ public class Teleporter : MonoBehaviour, IInteractable
 
             if (!lanceScript.IsImmobile)
             {
-                StartCoroutine("TeleportPlayer");
+                StartCoroutine(TeleportPlayer());
             }
             else
             {

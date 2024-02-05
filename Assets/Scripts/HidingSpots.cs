@@ -39,7 +39,6 @@ public class HidingSpots : MonoBehaviour, IInteractable
             isPlayerInReach = false;
             keyIndicator.gameObject.SetActive(false);
             lanceScript.SetCurrentInteractable(null);
-            StopInteraction();
         }
     }
 
@@ -47,20 +46,16 @@ public class HidingSpots : MonoBehaviour, IInteractable
     {
         if (isPlayerInReach)
         {
+            if (lanceScript.Flatulence > MaxFlatulenceForInteraction)
+            {
+                OnPlayerFailedInteraction?.Invoke();
+                return;
+            }
+
             if (!lanceScript.IsImmobile)
             {
                 OnPlayerHide?.Invoke();
                 isPlayerInside = true;
-                lanceScript.IsHidden = true;
-
-                Debug.Log("Player tries to enter hiding spot");
-            }
-            else
-            {
-                if (lanceScript.Flatulence > MaxFlatulenceForInteraction)
-                {
-                    OnPlayerFailedInteraction?.Invoke();
-                }
             }
         }
     }
@@ -69,10 +64,11 @@ public class HidingSpots : MonoBehaviour, IInteractable
     {
         if (isPlayerInside || isPlayerInReach == false)
         {
-            OnPlayerUnhide?.Invoke();
+            if (isPlayerInside)
+            {
+                OnPlayerUnhide?.Invoke();
+            }
             isPlayerInside = false;
-            lanceScript.IsHidden = false;
-            Debug.Log("Player leaves hiding spot");
         }
     }
 }
